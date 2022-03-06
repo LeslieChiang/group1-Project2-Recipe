@@ -1,4 +1,5 @@
-# Module 3 Project Proposal & Scopes: My Cooking-Recipes Web App
+## Module 3 Project Proposal & Scopes: 
+# My Cooking-Recipes Web App
 
 A web app that allows registered user to keep their secret recipes online which allow user to key their recipes with images.
 - allow user to list the 
