@@ -32,15 +32,10 @@ app.use(
 
 // Set up passport
 app.use(passport.initialize());
-app.use(passport.session());
+app.use(passport.session()); // equivalent app.use(passport.authenticate('session'));
 
-// // passport needs ability to serialize and unserialize users out of session
-// passport.use(UserDetails.createStrategy());
-// passport.serializeUser(UserDetails.serializeUser());
-// passport.deserializeUser(UserDetails.deserializeUser());
 
 app.use(generalRoutes);
-
 app.use(loginRoutes);
 
 module.exports = app;

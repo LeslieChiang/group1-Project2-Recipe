@@ -13,6 +13,11 @@ router
   .route("/login")
   .get((request, response) => {
     response.send("You have called a login route!");
+    // if (request.isAuthenticated()) {
+    //   response.redirect("/");
+    // } else {
+    //   response.redirect("/login");
+    // }
   })
   .post(userController.login);
 
@@ -30,8 +35,16 @@ router
   })
   .post(userController.register);
 
+router.route("/").get((request, response) => {
+  response.send("You have called the root route!");
+  // if (request.isAuthenticated()) {
+  //   response.send("You have called the root route!");
+  // } else {
+  //   response.redirect("/login");
+  // }
+});
 
-  // router.put("/protected/recipe", recipeController.update);
+// router.put("/protected/recipe", recipeController.update);
 // router.delete("/protected/driver/:driverId", recipeController.deleteDriver);
 
 module.exports = router;

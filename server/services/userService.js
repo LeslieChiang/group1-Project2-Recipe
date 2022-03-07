@@ -9,25 +9,22 @@ User.sync({ alter: true }).then(() => console.log("sqlite3 db is ready"));
 console.log("User: ", User);
 
 module.exports = {
-  logout: async () => {
+//   logout: async (req, res) => {
+//     let result = {
+//       message: "Logout successful",
+//       status: 200,
+//     };
+
+//     req.logout();
+//     req.session.destroy();
+
+//     // Return results
+//     return res.json({ status: result.status, message: result.message });
+//   },
+
+  verifyLogin: async (userName, emailAddress, passWord, callback) => {
     let result = {
-      message: "Logout successful",
-      status: 200,
-    };
-
-    // // look for user in the database
-    // const user = await User.findOne({
-    //   where: { userName: username },
-    // });
-
-    req.logout();
-
-    // Return results
-    return res.json({ status: result.status, message: result.message });
-  },
-
-  login: async (req, res) => {
-    let result = {
+      data: null,
       message: null,
       status: null,
       //   jwt: null,
@@ -35,25 +32,18 @@ module.exports = {
 
     // look for user in the database
     const user = await User.findOne({
-      where: { userName: req.body.username },
+      where: { userName: userName },
     });
 
     if (!user) {
       result.status = 400;
       result.message = "Please register a new user";
-      return res.json({ status: result.status, message: result.message });
+      return callback(null, false, { message: "Incorrect username" });
     }
 
     if (user) {
-      req.login(user, function (err) {
-        if (err) {
-          return next(err);
-        }
-        return res.redirect("/users/" + req.user.username);
-      });
-
       // Verify user password
-      bcrypt.compare(req.body.password, user.passWord, (err, resultMatch) => {
+      bcrypt.compare(passWord, user.passWord, (err, resultMatch) => {
         // console.log("resultMatch", resultMatch);
         if (err) {
           return res.json({
@@ -65,10 +55,12 @@ module.exports = {
         if (!resultMatch) {
           result.status = 400;
           result.message = "Password is invalid";
-          return res.json({ status: result.status, message: result.message });
+          return callback(null, false, { message: "Incorrect password." });
         } else {
           result.status = 200;
           result.message = "Login successful";
+          result.data = user;
+          return callback(null, user);
 
           //   // Create JWT
           //   jwt.sign(
@@ -107,16 +99,11 @@ module.exports = {
 
     console.log("login: results after user found: ", result);
     // Return results
-    return res.json({ status: result.status, message: result.message });
+    // return;
   },
 
   register: async (userName, emailAddress, passWord) => {
-    console.log(
-      "userName/emailAddress/passWord INPUT: ",
-      userName,
-      emailAddress,
-      passWord
-    ); // log input
+    console.log("user INPUT: ", userName, emailAddress, passWord); // log input
     let result = {
       message: null,
       status: null,
@@ -149,7 +136,6 @@ module.exports = {
           result.message = "Registration successful";
         }
       });
-
     } else {
       result.status = 400;
       result.message = "User already exists! Please login with password";
@@ -157,7 +143,7 @@ module.exports = {
 
     // const resultUser = await User.findAll();
     // console.log("\n attribute", JSON.stringify(resultUser));
-   
+
     console.log("register_result", result);
 
     // Return results

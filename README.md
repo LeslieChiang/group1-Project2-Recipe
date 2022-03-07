@@ -66,7 +66,6 @@ Project structure:
   - routes
     - index.js
     - loginRoutes.js
-    - registerRouters.js
   - services
     - userService.js
     - recipeService.js
@@ -77,9 +76,9 @@ Project structure:
 - User-login
 ```javascript
     router.route("/login") // priority
-    router.route("/logout") // priority
+    router.route("/logout") // priority added
     router.route("/resetpassword")
-    router.route("/register")
+    router.route("/register") // added
     router.route("/deleteUser")
 ```
 - Recipe
