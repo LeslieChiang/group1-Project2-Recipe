@@ -72,3 +72,22 @@ Project structure:
     - recipeService.js
   - index.js
 ```
+
+## Required End-points
+- User-login
+```javascript
+    router.route("/login") // priority
+    router.route("/logout") // priority
+    router.route("/resetpassword")
+    router.route("/register")
+    router.route("/deleteUser")
+```
+- Recipe
+```javascript
+    router.route("/") // priority
+    router.route("/add") // priority
+    router.route("/edit") // priority
+    router.route("/delete") // priority
+    router.route("/search")
+```
+
