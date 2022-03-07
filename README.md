@@ -21,14 +21,14 @@ A web app that allows registered user to keep their secret recipes online which 
 
 
 ## Scopes of work:
-- Software System Architecture => Leslie (Thursday) DONE
+- Software System Architecture => Leslie (Thursday 3/3) DONE
   - Use Case UML diagrams
   - Use Case Scenario UML diagrams
-  - ERD digrams 
-- Git integration => CP, Leslie (Sat)
-- MVC framework - nodeJS => Leslie (Sat/Sun)
-- ReactJS UI frontend => CP (Fri)
-- Authentication - Cookies/Session - passport.js & express-session: => Liew (Research-Fri)
+  - ERD digrams => Keith/Mani DONE (7/3)
+- Git integration => CP, Leslie 
+- MVC framework - nodeJS => Leslie 
+- ReactJS UI frontend => CP 
+- Authentication - Cookies/Session - passport.js & express-session: => Liew/Leslie
 - ORM-Sequelize + HerokuPostgres (refer to ERD) => Mani, Keith
 - Heroku Deployment.
 
@@ -44,7 +44,7 @@ A web app that allows registered user to keep their secret recipes online which 
   - Queries
 - Application Security (Passport, Bcrypt & JWT) - 
   - Authentication
-  - Verify against HTTP Authorization Header in middleware ??
+  - Passport.js session 
 - Model View Controller Architecture
 
 
@@ -84,10 +84,10 @@ Project structure:
 ```
 - Recipe
 ```javascript
-    router.route("/") // priority
-    router.route("/add") // priority
-    router.route("/edit") // priority
-    router.route("/delete") // priority
-    router.route("/search")
+    router.route("/") // route to /login if user not login // priority 
+    router.route("/add") // user.isAuthenticated() // priority
+    router.route("/edit") // user.isAuthenticated() // priority
+    router.route("/delete") // user.isAuthenticated() // priority
+    router.route("/search") // user.isAuthenticated() 
 ```
 
