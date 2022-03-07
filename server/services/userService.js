@@ -1,183 +1,166 @@
 // execute to DB model
 
+// bcrpyt
+const bcrypt = require("bcrypt");
+const saltRounds = 10;
+
 const { User } = require("../models");
+User.sync({ alter: true }).then(() => console.log("sqlite3 db is ready"));
+console.log("User: ", User);
 
 module.exports = {
-//   onboard: async (vehicleId, driverId) => {
-//     // the result object is where we will put the result to be sent to the client
-//     let result = {
-//       message: null,
-//       status: null,
-//       data: null,
-//     };
+  logout: async () => {
+    let result = {
+      message: "Logout successful",
+      status: 200,
+    };
 
-//     // look for vehicle and driver in the database
-//     const user = await User.findByPk(id);
+    // // look for user in the database
+    // const user = await User.findOne({
+    //   where: { userName: username },
+    // });
 
-//     // - check if driver and vehicle exists
-//     if (!vehicle) {
-//       result.message = `vehicle ID ${vehicleId} is not found!`;
-//       result.status = 404;
-//       return result;
-//     }
+    req.logout();
 
-//     // - check if driver has already onboarded the vehicle
-//     if (!driver) {
-//       result.message = `driver ID ${driverId} is not found!`;
-//       result.status = 404;
-//       return result;
-//     }
+    // Return results
+    return res.json({ status: result.status, message: result.message });
+  },
 
-//     // - if yes, return onboarded
-//     // - if no, assign driver's id to vehicle
-//     if (vehicle.driverId) {
-//       result.message = `Vehicle ID ${vehicle.id} is already in use.`;
-//       result.status = 400;
-//       return result;
-//     }
+  login: async (req, res) => {
+    let result = {
+      message: null,
+      status: null,
+      //   jwt: null,
+    };
 
-//     vehicle.driverId = driver.id;
-//     await vehicle.save(); // update the vehicle
-//     // option 2: rerun query to find the vehicle and assign it to result.data
-//     // result.data = await Vehicle.findByPk(vehicleId);
-//     result.data = vehicle;
-//     result.status = 200;
-//     result.message = "Onboard successful";
-//     return result;
-//   },
+    // look for user in the database
+    const user = await User.findOne({
+      where: { userName: req.body.username },
+    });
 
-//   // Task 1 POST /protected/offboard
-//   offboard: async (vehicleId) => {
-//     // the result object is where we will put the result to be sent to the client
-//     let result = {
-//       message: null,
-//       status: null,
-//       data: null,
-//     };
+    if (!user) {
+      result.status = 400;
+      result.message = "Please register a new user";
+      return res.json({ status: result.status, message: result.message });
+    }
 
-//     // look for vehicle in the database
-//     const vehicle = await Vehicle.findByPk(vehicleId);
+    if (user) {
+      req.login(user, function (err) {
+        if (err) {
+          return next(err);
+        }
+        return res.redirect("/users/" + req.user.username);
+      });
 
-//     // - check if driver and vehicle exists
-//     if (!vehicle) {
-//       result.message = `vehicle ID ${vehicleId} is not found!`;
-//       result.status = 404;
-//       return result;
-//     }
+      // Verify user password
+      bcrypt.compare(req.body.password, user.passWord, (err, resultMatch) => {
+        // console.log("resultMatch", resultMatch);
+        if (err) {
+          return res.json({
+            error: "Server is not performing right now.",
+            errorCode: "INTERNAL_ERROR",
+          });
+        }
 
-//     // if found vehicle has a driver
-//     if (vehicle.driverId) {
-//       result.message = `Vehicle ID ${vehicle.id} has driver ${vehicle.driverId} onboard. Offboarding driver!`;
-//       vehicle.driverId = null;
-//       await vehicle.save(); // update the vehicle
-//       result.data = vehicle;
-//       result.status = 200;
-//       return result;
-//     }
+        if (!resultMatch) {
+          result.status = 400;
+          result.message = "Password is invalid";
+          return res.json({ status: result.status, message: result.message });
+        } else {
+          result.status = 200;
+          result.message = "Login successful";
 
-//     // if found vehicle has no driver
-//     if (!vehicle.driverId) {
-//       result.message = `Vehicle ID ${vehicle.id} has no driver to offboard!`;
-//       result.status = 400;
-//       return result;
-//     }
-//   },
+          //   // Create JWT
+          //   jwt.sign(
+          //     req.body,
+          //     rs256Key,
+          //     { algorithm: "RS256", expiresIn: "30d" },
+          //     (err, jwToken) => {
+          //       if (err) {
+          //         console.log(err);
+          //         return res.json({
+          //           error: "Server is not performing right now.",
+          //           errorCode: "INTERNAL_ERROR",
+          //         });
+          //       }
+          //       // console.log("jwtoken: ",jwToken);
+          //       result.status = 200;
+          //       result.message = "Login successful";
+          //       result.jwt = jwToken;
+          //       return res.json({
+          //         status: result.status,
+          //         message: result.message,
+          //         jwt: result.jwt,
+          //       });
+          //     }
+          //   );
+        }
 
-//   // Task 2 PUT /protected/vehicle (type | car_plate_no)
-//   update: async (vehicleId, type, carPlateNo) => {
-//     // the result object is where we will put the result to be sent to the client
-//     let result = {
-//       message: null,
-//       status: null,
-//       data: null,
-//     };
+        // console.log("Result in bcrypt: ", result);
+        // return res.json({ status: result.status, message: result.message });
+        // return result;
+      });
 
-//     // look for vehicle in the database
-//     const vehicle = await Vehicle.findByPk(vehicleId);
+      // console.log("results after bcrypt: ", result);
+      // return result;
+    }
 
-//     // - check if vehicle exists
-//     if (!vehicle) {
-//       result.message = `vehicle ID ${vehicle.id} is not found!`;
-//       result.status = 404;
-//       return result;
-//     }
+    console.log("login: results after user found: ", result);
+    // Return results
+    return res.json({ status: result.status, message: result.message });
+  },
 
-//     // if found vehicle (id | type | car_plate_no)
-//     if (vehicle) {
-//       vehicle.type = type;
-//       vehicle.carPlateNo = carPlateNo;
-//       await vehicle.save(); // update the vehicle
-//       result.message = `Updated Vehicle ID ${vehicle.id}!`;
-//       result.data = vehicle;
-//       result.status = 200;
-//       return result;
-//     }
-//   },
+  register: async (userName, emailAddress, passWord) => {
+    console.log(
+      "userName/emailAddress/passWord INPUT: ",
+      userName,
+      emailAddress,
+      passWord
+    ); // log input
+    let result = {
+      message: null,
+      status: null,
+    };
 
-//   // Task 3 DELETE /protected/driver/:driverId , ensure driver is not onboard any vehicle
-//   deleteDriver: async (driverId) => {
-//     // the result object is where we will put the result to be sent to the client
-//     let result = {
-//       message: null,
-//       status: null,
-//       data: null,
-//     };
+    // look for user in the database
+    const user = await User.findOne({
+      where: { userName: userName },
+    });
+    // console.log("user: ", user);
 
-//     // check if driverId exist in database
-//     const driverExist = await Driver.findOne({
-//       where: { id: driverId },
-//     });
+    if (!user) {
+      // user.userName = req.body.username;
+      bcrypt.hash(passWord, saltRounds, (err, hash) => {
+        // A callback function called after hash() complete.
+        if (err) {
+          // console.error(err);
+          return res.json({
+            error: "Server is not performing right now.",
+            errorCode: "INTERNAL_ERROR",
+          });
+        } else {
+          console.log("Hash: ", hash);
+          User.create({
+            userName: userName,
+            emailAddress: emailAddress,
+            passWord: hash,
+          });
+          result.status = 200;
+          result.message = "Registration successful";
+        }
+      });
 
-//     if (!driverExist) {
-//       result.message = `Driver ID ${driverId} is not present in the database`;
-//       result.status = 404;
-//       return result;
-//     }
+    } else {
+      result.status = 400;
+      result.message = "User already exists! Please login with password";
+    }
 
-//     if (driverExist) {
-//       // const vehicle = await Vehicle.findByPk(vehicleId);
-//       const vehicleOnboard = await Vehicle.findOne({
-//         where: { driverId: driverId },
-//       });
+    // const resultUser = await User.findAll();
+    // console.log("\n attribute", JSON.stringify(resultUser));
+   
+    console.log("register_result", result);
 
-//       // - check if driver and vehicle exists
-//       if (vehicleOnboard) {
-//         result.message = `Driver ID ${vehicleOnboard.driverId} is onboard on vehicle ID ${vehicleOnboard.id}!`;
-//         result.status = 404;
-//         return result;
-//       }
-
-//       // if driver is not onboard
-//       if (!vehicleOnboard) {
-//         result.message = `Driver ID ${driverId} is deleted from DB!`;
-//         const count = await Driver.destroy({ where: { id: driverId } });
-//         result.data = await Driver.findAll({});
-//         result.status = 200;
-//         return result;
-//       }
-//     }
-//   },
-
-//   // Task 4
-//   showAll: async () => {
-//     // the result object is where we will put the result to be sent to the client
-//     let result = {
-//       message: null,
-//       status: null,
-//       data: null,
-//     };
-
-//     // connect to DB and query the list of vehicles
-//     const data = await Vehicle.findAll({
-//       include: [
-//         {
-//           model: Driver, // allows us to check the values of the Driver as well given the driver_id
-//         },
-//       ],
-//     });
-//     result.message = "Data fetched successfully from DB";
-//     result.status = 200;
-//     result.data = data; // this would be all the vehicles from the DB
-//     return result;
-//   },
+    // Return results
+    return result;
+  },
 };

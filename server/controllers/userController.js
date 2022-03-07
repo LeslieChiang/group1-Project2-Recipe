@@ -3,9 +3,9 @@ const passport = require("passport");
 const LocalStrategy = require("passport-local").Strategy;
 
 
-// import service
-const userService = require("../services/recipeService");
 
+// import service
+const userService = require("../services/userService");
 
 // establish the VehicleController first, then userService
 class UserController {
@@ -30,67 +30,52 @@ class UserController {
 
     // // Return results from service
     // return res.json({ data: result.data, message: result.message });
+
+    app.post(
+      "/login",
+      passport.authenticate("local", { failureRedirect: "/login" }),
+      function (req, res) {
+        res.redirect("/");
+      }
+    );
   }
 
-//   async offboard(req, res, next) {
-//     if (
-//       // typeof req.body.driverId !== "number" ||
-//       typeof req.body.vehicleId !== "number"
-//     ) {
-//       res.status(400); // bad request
-//       return res.json({ message: "Incorrect request data" });
-//     }
+  async logout(req, res, next) {
+    // // use the service layer
+    const result = await userService.logout(req, res);
+    res.status(result.status);
 
-//     // use the service layer
-//     // perform after UserController is working
-//     const result = await userService.offboard(req.body.vehicleId);
-//     res.status(result.status);
+    // // Return results from service
+    return res.redirect("/login");
+  }
 
-//     // Return results from service
-//     return res.json({ data: result.data, message: result.message });
-//   }
+  async register(req, res, next) {
+    if (
+      typeof req.body.userName !== "string" ||
+      typeof req.body.emailAddress !== "string" ||
+      typeof req.body.passWord !== "string"
+    ) {
+      res.status(400); // bad request
+      return res.json({
+        message: "Incorrect user inputs: userName/emailAddress/passWord",
+      });
+    }
 
-//   async update(req, res, next) {
-//     console.log(req.body);
-//     if (
-//       typeof req.body.vehicleId !== "number" ||
-//       typeof req.body.type !== "string" ||
-//       typeof req.body.carPlateNo !== "string"
-//     ) {
-//       res.status(400); // bad request
-//       return res.json({ message: "Incorrect request data!" });
-//     }
+    // use the service layer
+    // perform after UserController is working
+    const result = await userService.register(
+      req.body.userName,
+      req.body.emailAddress,
+      req.body.passWord
+    );
+    // res.status(result.status);
 
-//     // use the service layer
-//     const result = await userService.update(
-//       req.body.vehicleId,
-//       req.body.type,
-//       req.body.carPlateNo
-//     );
-//     res.status(result.status);
+    // res.redirect("/login");
 
-//     // Return results from service
-//     return res.json({ data: result.data, message: result.message });
-//   }
-
-//   // delete driver by Id
-//   async deleteDriver(req, res, next) {
-//     // console.log("Driver ID: ", typeof req.params.driverId);
-
-//     // use the service layer
-//     const result = await userService.deleteDriver(req.params.driverId);
-//     res.status(result.status);
-//     // Return results from service
-//     return res.json({ data: result.data, message: result.message });
-//   }
-
-//   // create a function table inside the class called showAll to call the service showAll to get data
-//   async showAll(req, res, next) {
-//     // no need for any req.body or req.params because we are showing full data
-//     const result = await userService.showAll();
-//     res.status = result.status;
-//     return res.json({ data: result.data, message: result.message });
-//   }
+    console.log("controller result: ", result);
+    // Return results from service
+    return res.json({ status: result.status, message: result.message });
+  }
 }
 
 module.exports = UserController;

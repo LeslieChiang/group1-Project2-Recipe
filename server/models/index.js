@@ -1,11 +1,14 @@
 // Import sequelize
 const { Sequelize } = require("sequelize");
 
-// DB Connection Configuration
-const sequelize = new Sequelize("project", "leslie", "", {
-  host: "localhost",
-  dialect: "postgres",
-});
+// // DB Connection Configuration
+// const sequelize = new Sequelize("project", "leslie", "", {
+//   host: "localhost",
+//   dialect: "postgres",
+// });
+
+const sequelize = new Sequelize("sqlite::memory:");
+
 
 // Test connection function
 async function testConnection() {

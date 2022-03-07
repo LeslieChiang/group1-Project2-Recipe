@@ -4,15 +4,10 @@
 const express = require("express");
 const router = express.Router(); // create route
 
-
 // Import User controller
 const UserController = require("../controllers/userController");
 // Instantiate a new class instance
 const userController = new UserController();
-
-
-
-
 
 router
   .route("/login")
@@ -21,10 +16,22 @@ router
   })
   .post(userController.login);
 
+router
+  .route("/logout")
+  .get((request, response) => {
+    response.send("You have called a logout route!");
+  })
+  .post(userController.logout);
 
-// router.post("/protected/onboard", recipeController.onboard);
-// router.post("/protected/offboard", recipeController.offboard);
-// router.put("/protected/recipe", recipeController.update);
+router
+  .route("/register")
+  .get((request, response) => {
+    response.send("You have called a register route!");
+  })
+  .post(userController.register);
+
+
+  // router.put("/protected/recipe", recipeController.update);
 // router.delete("/protected/driver/:driverId", recipeController.deleteDriver);
 
 module.exports = router;

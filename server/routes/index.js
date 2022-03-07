@@ -7,7 +7,7 @@ const passport = require("passport");
 const session = require("express-session");
 
 const generalRoutes = require("./generalRoutes");
-const registerRoutes = require("./registerRoutes");
+
 const loginRoutes = require("./loginRoutes");
 
 const app = express();
@@ -40,7 +40,7 @@ app.use(passport.session());
 // passport.deserializeUser(UserDetails.deserializeUser());
 
 app.use(generalRoutes);
-app.use(registerRoutes);
+
 app.use(loginRoutes);
 
 module.exports = app;
