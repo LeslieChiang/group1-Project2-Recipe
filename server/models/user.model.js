@@ -15,7 +15,7 @@ module.exports = function (sequelize) {
         type: DataTypes.STRING,
         allowNull: false,
         unique: true,
-        field: "username",
+        field: "user_name",
       },
 
       emailAddress: {
@@ -27,13 +27,13 @@ module.exports = function (sequelize) {
             msg: "Must be a valid email address",
           },
         },
-        field: "email_add",
+        field: "email_address",
       },
 
       passWord: {
         type: DataTypes.STRING,
         allowNull: false,
-        field: "password",
+        field: "hash_password",
       },
 
       createdAt: {

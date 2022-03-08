@@ -27,15 +27,24 @@ const User = require("./user.model")(sequelize);
 const Recipe = require("./recipe.model")(sequelize);
 const Ingredient = require("./ingredient.model")(sequelize);
 const RecipeIngredientInter = require("./recipe_ingredient_inter.model")(sequelize);
-// const Recipe = require("./recipe.model")(sequelize);
-// const User = require("./user.model")(sequelize);
-
+const Image = require("./image.model")(sequelize);
 
 // Create associations *** Keith, Mani
 Recipe.belongsTo(User, {
-  foreignKey: "userId",
+  foreignKey: "user_id",
 });
 
+Recipe.belongsTo(Image, {
+  foreignKey: "image_id",
+});
+
+RecipeIngredientInter.belongsTo(Recipe, {
+  foreignKey: "recipe_id",
+});
+
+RecipeIngredientInter.belongsTo(Ingredient, {
+  foreignKey: "ingredient_id",
+});
 
 // Exports (enhanced object literal)
 module.exports = {
@@ -45,4 +54,5 @@ module.exports = {
   User,
   Ingredient,
   RecipeIngredientInter,
+  Image,
 };

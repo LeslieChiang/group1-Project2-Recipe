@@ -1,9 +1,9 @@
 const { DataTypes, Model } = require("sequelize");
 
 module.exports = function (sequelize) {
-  class Ingredient extends Model {}
+  class Image extends Model {}
 
-  Ingredient.init(
+  Image.init(
     {
       id: {
         type: DataTypes.INTEGER,
@@ -11,11 +11,23 @@ module.exports = function (sequelize) {
         autoIncrement: true,
       },
 
-      ingredientName: {
+      imagePrimary: {
         type: DataTypes.STRING,
-        allowNull: false,
-        field: "ingredient_name",
+        allowNull: true,
+        field: "image_primary",
       },
+
+      imageSecondary: {
+        type: DataTypes.STRING,
+        allowNull: true,
+        field: "image_secondary",
+      },
+
+      // imageLink: {
+      //   type: DataTypes.STRING,
+      //   allowNull: true,
+      //   field: "image_link",
+      // },
 
       createdAt: {
         type: DataTypes.DATE,
@@ -29,10 +41,10 @@ module.exports = function (sequelize) {
     },
     {
       sequelize,
-      modelName: "Ingredient",
-      tableName: "ingredients",
+      modelName: "Image",
+      tableName: "images",
     }
   );
 
-  return Ingredient;
+  return Image;
 };
