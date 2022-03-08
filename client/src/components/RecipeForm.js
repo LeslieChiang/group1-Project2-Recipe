@@ -25,8 +25,9 @@ const savedValues = {
   method: '',
 };
 // Call APIs here with payload
-const onSubmit = (values) => {
+const onSubmit = (values, onSubmitProps) => {
   console.log('onSubmit=>values', values);
+  onSubmitProps.resetForm();
 };
 // YUP validation object schema (As an alternative to validate)
 const validationSchema = Yup.object({
@@ -37,6 +38,7 @@ const validationSchema = Yup.object({
 function RecipeForm() {
   const [formValues, setFormValues] = useState(null);
   const dropdownOptions = [
+    { key: 'Select ingredient', value: '' },
     { key: 'Beef', value: 'beef' },
     { key: 'Cardomom Pod', value: 'cardomomPod' },
     { key: 'Cinnamon', value: 'cinnamon' },
@@ -50,6 +52,7 @@ function RecipeForm() {
 
   return (
     <Formik
+      // initialValues={formValues || initialValues}
       initialValues={formValues || initialValues}
       validationSchema={validationSchema}
       onSubmit={onSubmit}
@@ -72,41 +75,44 @@ function RecipeForm() {
                     const { ingredientList } = values;
                     return (
                       <div>
-                        {ingredientList.map((item, index) => (
-                          <div className='row' key={index}>
-                            <div className='col-3'>
-                              <Input
-                                name={`ingredientList.${index}.quantity`}
-                              />
+                        {ingredientList.map((item, index) => {
+                          return (
+                            <div className='row' key={index}>
+                              <div className='col-3'>
+                                <Input
+                                  name={`ingredientList.${index}.quantity`}
+                                  placeholder={'Enter quantity'}
+                                />
+                              </div>
+                              <div className='col-6'>
+                                <Select
+                                  name={`ingredientList.${index}.name`}
+                                  options={dropdownOptions}
+                                />
+                              </div>
+                              <div className='col-3'>
+                                {index > 0 && (
+                                  <button
+                                    type='button'
+                                    className='button icon-only'
+                                    onClick={() => remove(index)}
+                                  >
+                                    ➖
+                                  </button>
+                                )}
+                                {index <= 10 && (
+                                  <button
+                                    type='button'
+                                    className='button icon-only'
+                                    onClick={() => push('')}
+                                  >
+                                    ➕
+                                  </button>
+                                )}
+                              </div>
                             </div>
-                            <div className='col-6'>
-                              <Select
-                                name={`ingredientList.${index}.name`}
-                                options={dropdownOptions}
-                              />
-                            </div>
-                            <div className='col-3'>
-                              {index > 0 && (
-                                <button
-                                  type='button'
-                                  className='button icon-only'
-                                  onClick={() => remove(index)}
-                                >
-                                  ➖
-                                </button>
-                              )}
-                              {index <= 10 && (
-                                <button
-                                  type='button'
-                                  className='button icon-only'
-                                  onClick={() => push('')}
-                                >
-                                  ➕
-                                </button>
-                              )}
-                            </div>
-                          </div>
-                        ))}
+                          );
+                        })}
                       </div>
                     );
                   }}
