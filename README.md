@@ -75,18 +75,18 @@ Project structure:
 ## Required End-points
 - User-login
 ```javascript
-    router.route("/login") // priority
-    router.route("/logout") // priority added
-    router.route("/resetpassword")
-    router.route("/register") // added
+    router.route("/register") // added Leslie
+    router.route("/login") // priority Liew
+    router.route("/logout") // priority added Liew
+    router.route("/resetpassword") 
     router.route("/deleteUser")
 ```
 - Recipe
 ```javascript
-    router.route("/") // route to /login if user not login // priority 
-    router.route("/add") // user.isAuthenticated() // priority
-    router.route("/edit") // user.isAuthenticated() // priority
-    router.route("/delete") // user.isAuthenticated() // priority
-    router.route("/search") // user.isAuthenticated() 
+    router.route("/") // route to /login if user not login // priority Mani
+    router.route("/add") // user.isAuthenticated() // priority CP
+    router.route("/edit") // user.isAuthenticated() // priority CP
+    router.route("/delete") // user.isAuthenticated() // priority Keith
+    router.route("/search") // user.isAuthenticated() // Charles
 ```
 
