@@ -23,6 +23,12 @@ module.exports = function (sequelize) {
         field: "ingredient_id",
       },
 
+      ingredientQuantity: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        field: "ingredient_quantity",
+      },
+
       createdAt: {
         type: DataTypes.DATE,
         field: "created_at",
