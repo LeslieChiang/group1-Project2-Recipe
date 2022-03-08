@@ -6,7 +6,7 @@ const bodyParser = require("body-parser");
 const passport = require("passport");
 const session = require("express-session");
 
-const generalRoutes = require("./generalRoutes");
+const recipeRoutes = require("./recipeRoutes");
 
 const loginRoutes = require("./loginRoutes");
 
@@ -35,7 +35,7 @@ app.use(passport.initialize());
 app.use(passport.session()); // equivalent app.use(passport.authenticate('session'));
 
 
-app.use(generalRoutes);
+app.use(recipeRoutes);
 app.use(loginRoutes);
 
 module.exports = app;
