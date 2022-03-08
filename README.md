@@ -89,4 +89,10 @@ Project structure:
     router.route("/delete") // user.isAuthenticated() // priority Keith
     router.route("/search") // user.isAuthenticated() // Charles
 ```
+# Heroku access
 
+Heroku postgres db setup in progress, users table done. Herewith the steps to connect to it from your local.
+(1) open terminal
+(2) heroku login
+(3) press any key open browser then key in credentials. Email: ch3group1@mail.com Password: ch3@group1
+(4) heroku pg:psql postgresql-amorphous-45283 --app ecookbook
