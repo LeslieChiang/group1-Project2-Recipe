@@ -1,9 +1,9 @@
 const { DataTypes, Model } = require("sequelize");
 
 module.exports = function (sequelize) {
-  class User extends Model {}
+  class Image extends Model {}
 
-  User.init(
+  Image.init(
     {
       id: {
         type: DataTypes.INTEGER,
@@ -11,29 +11,29 @@ module.exports = function (sequelize) {
         autoIncrement: true,
       },
 
-      emailAddress: {
+      imagePrimary: {
         type: DataTypes.STRING,
-        allowNull: false,
-        unique: true,
-        validate: {
-          isEmail: {
-            msg: "Must be a valid email address",
-          },
-        },
-        field: "email_address",
+        allowNull: true,
+        field: "image_primary",
       },
 
-      passWord: {
+      imageSecondary: {
         type: DataTypes.STRING,
-        allowNull: false,
-        field: "hash_password",
+        allowNull: true,
+        field: "image_secondary",
       },
+
+      // imageLink: {
+      //   type: DataTypes.STRING,
+      //   allowNull: true,
+      //   field: "image_link",
+      // },
 
       createdAt: {
         type: DataTypes.DATE,
         field: "created_at",
       },
-
+      
       updatedAt: {
         type: DataTypes.DATE,
         field: "updated_at",
@@ -41,10 +41,10 @@ module.exports = function (sequelize) {
     },
     {
       sequelize,
-      modelName: "User",
-      tableName: "users",
+      modelName: "Image",
+      tableName: "images",
     }
   );
 
-  return User;
+  return Image;
 };

@@ -17,30 +17,42 @@ module.exports = function (sequelize) {
         field: "user_id",
       },
 
-      recipeName: {
+      imageId: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        field: "image_id",
+      },
+
+      recipeTitle: {
         type: DataTypes.STRING,
         allowNull: false,
         unique: true,
-        field: "recipe_name",
+        field: "recipe_title",
       },
 
+      cuisineType: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        field: "cuisine_type",
+      },
 
-      // ingredients: {
-      //   type: DataTypes.STRING,
-      //   allowNull: false,
-      //   field: "ingredients",
-      // },
+      dishGroup: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        field: "dish_group",
+      },
 
-      // imageLink: {
-      //   type: DataTypes.STRING,
-      //   allowNull: true,
-      //   field: "image_link",
-      // },
+      cookingSteps: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        field: "cooking_steps",
+      },
 
       createdAt: {
         type: DataTypes.DATE,
         field: "created_at",
       },
+
       updatedAt: {
         type: DataTypes.DATE,
         field: "updated_at",

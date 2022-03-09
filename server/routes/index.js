@@ -5,10 +5,6 @@ const bodyParser = require("body-parser");
 require("dotenv").config();
 // const passport = require("./passport");
 
-
-
-
-
 const recipeRoutes = require("./recipeRoutes");
 const loginRoutes = require("./loginRoutes");
 

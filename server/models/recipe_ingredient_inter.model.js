@@ -11,40 +11,29 @@ module.exports = function (sequelize) {
         autoIncrement: true,
       },
 
-    //   userId: {
-    //     type: DataTypes.INTEGER,
-    //     allowNull: false,
-    //     field: "user_id",
-    //   },
-    //   recipeName: {
-    //     type: DataTypes.STRING,
-    //     allowNull: false,
-    //     unique: true,
-    //     field: "recipe_name",
-    //   },
+      recipeId: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        field: "recipe_id",
+      },
 
-    //   cuisineType: {
-    //     type: DataTypes.STRING,
-    //     allowNull: false,
-    //     field: "cuisine_type",
-    //   },
+      ingredientId: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        field: "ingredient_id",
+      },
 
-    //   dishType: {
-    //     type: DataTypes.STRING,
-    //     allowNull: false,
-    //     field: "dish_type",
-    //   },
-
-    //   ingredients: {
-    //     type: DataTypes.STRING,
-    //     allowNull: false,
-    //     field: "ingredients",
-    //   },
+      ingredientQuantity: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        field: "ingredient_quantity",
+      },
 
       createdAt: {
         type: DataTypes.DATE,
         field: "created_at",
       },
+
       updatedAt: {
         type: DataTypes.DATE,
         field: "updated_at",
@@ -53,7 +42,7 @@ module.exports = function (sequelize) {
     {
       sequelize,
       modelName: "RecipeIngredientInter",
-      tableName: "recipeIngredientInter",
+      tableName: "recipe_ingredient",
     }
   );
 
