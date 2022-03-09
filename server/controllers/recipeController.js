@@ -5,25 +5,6 @@ const recipeService = require("../services/recipeService");
 
 // establish the RecipeController first, then recipeService
 class RecipeController {
-  async logout(req, res, next) {
-    // // // use the service layer
-    // const result = await userService.logout(req, res);
-    // res.status(result.status);
-
-    // // // Return results from service
-    // return res.redirect("/login");
-    req.logout();
-    res.redirect("/login");
-  }
-
-  async getAllUsers (req, res) {
-    let Users = await users.findAll({})
-    res.status(200).send(users)
-  }
-  
-
-
-
   async add(req, res, next) {
     const { title, ingredient } = req.body;
 
@@ -39,7 +20,7 @@ class RecipeController {
     }
 
     // use the service layer
-    const result = await userService.add(title, ingredient);
+    const result = await recipeService.add(title, ingredient);
 
     console.log("controller result: ", result);
     res.redirect("/add");
@@ -61,7 +42,7 @@ class RecipeController {
     }
 
     // use the service layer
-    const result = await userService.edit(title, ingredient);
+    const result = await recipeService.edit(title, ingredient);
 
     console.log("controller result: ", result);
     res.redirect("/edit");
@@ -83,7 +64,7 @@ class RecipeController {
     }
 
     // use the service layer
-    const result = await userService.delete(title, ingredient);
+    const result = await recipeService.delete(title, ingredient);
 
     console.log("controller result: ", result);
     res.redirect("/delete");
@@ -95,7 +76,7 @@ class RecipeController {
     const result = await recipeService.showIngredient();
 
     console.log("controller result showIngredient: ", result);
-    // res.redirect("/showIngredient");
+    // return res.json({ status: result.status, message: result.message });
     return;
   }
 
@@ -104,7 +85,7 @@ class RecipeController {
     const result = await recipeService.showRecipe();
 
     console.log("controller result showRecipe: ", result);
-    res.redirect("/showRecipe");
+
     return;
   }
 }

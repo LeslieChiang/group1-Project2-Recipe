@@ -1,6 +1,11 @@
 // execute to DB model
 
-const { User, Recipe, Ingredient, RecipeIngredientInter } = require("../models");
+const {
+  User,
+  Recipe,
+  Ingredient,
+  RecipeIngredientInter,
+} = require("../models");
 
 module.exports = {
   add: async (vehicleId) => {
@@ -130,9 +135,10 @@ module.exports = {
 
     const resultUser = await User.findAll();
     console.log("\n attribute", JSON.stringify(resultUser));
+    
     result.message = "Data fetched successfully from DB";
     result.status = 200;
-    result.data = resultUser; 
+    result.data = resultUser;
 
     return result;
   },
@@ -148,6 +154,13 @@ module.exports = {
     const resultRecipe = await Recipe.findAll();
     console.log("\n attribute", JSON.stringify(resultRecipe));
 
+    result.message = "Data fetched successfully from DB";
+    result.status = 200;
+    result.data = resultRecipe; // this would be all the Recipe from the DB
+    console.log("Service result - showRecipe: ", JSON.stringify(result));
+
+    return result;
+
     // // connect to DB and query the list of vehicles
     // const data = await Vehicle.findAll({
     //   include: [
@@ -156,11 +169,5 @@ module.exports = {
     //     },
     //   ],
     // });
-    result.message = "Data fetched successfully from DB";
-    result.status = 200;
-    result.data = resultRecipe; // this would be all the Recipe from the DB
-
-    console.log("result - showRecipe: ", result);
-    return result;
   },
 };
