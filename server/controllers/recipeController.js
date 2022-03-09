@@ -63,7 +63,7 @@ class RecipeController {
   async delete(req, res, next) {
     const { title, ingredient } = req.body;
 
-    // test inputsa
+    // test inputs
     if (
       typeof req.body.title !== "string" ||
       typeof req.body.ingredient !== "string"
