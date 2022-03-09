@@ -11,13 +11,6 @@ module.exports = function (sequelize) {
         autoIncrement: true,
       },
 
-      userName: {
-        type: DataTypes.STRING,
-        allowNull: false,
-        unique: true,
-        field: "user_name",
-      },
-
       emailAddress: {
         type: DataTypes.STRING,
         allowNull: false,
