@@ -2,10 +2,6 @@
 
 const { Recipe, Ingredient, RecipeIngredientInter } = require("../models");
 
-// const { User } = require("../models");
-// User.sync({ alter: true }).then(() => console.log("sqlite3 db is ready"));
-// console.log("User: ", User);
-
 module.exports = {
   add: async (vehicleId) => {
     // the result object is where we will put the result to be sent to the client

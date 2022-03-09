@@ -10,7 +10,7 @@ const fs = require("fs");
 const rs256Key = process.env.SECRET_KEY;
 
 const { User } = require("../models");
-User.sync({ alter: true }).then(() => console.log("sqlite3 db is ready"));
+User.sync({ alter: true }).then(() => console.log("Database is ready"));
 
 module.exports = {
   //   logout: async (req, res) => {
