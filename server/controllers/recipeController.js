@@ -16,6 +16,14 @@ class RecipeController {
     res.redirect("/login");
   }
 
+  async getAllUsers (req, res) {
+    let Users = await users.findAll({})
+    res.status(200).send(users)
+  }
+  
+
+
+
   async add(req, res, next) {
     const { title, ingredient } = req.body;
 
