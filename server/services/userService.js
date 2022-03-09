@@ -4,6 +4,7 @@
 const bcrypt = require("bcrypt");
 const saltRounds = 10;
 const jwt = require("jsonwebtoken");
+const fs = require("fs");
 
 // Private RS256 key
 const rs256Key = process.env.SECRET_KEY;
@@ -87,45 +88,55 @@ module.exports = {
 
     if (isUser) {
       // Verify user password
-      bcrypt.compare(password, isUser.passWord, (err, resultMatch) => {
-        // console.log("resultMatch", resultMatch);
-        if (err) {
-          console.error(err);
-          //   return
-        }
+      
+      const match = bcrypt.compareSync(password, isUser.passWord);
+      if(!match) throw new Error("password does not match");
 
-        if (!resultMatch) {
-          result.status = 400;
-          result.message = "Password is invalid";
+      const key = fs.readFileSync(rs256Key);
+      const jwtToken = jwt.sign({ id: isUser.id, email: isUser.emailAddress }, key,{ algorithm: "RS256", expiresIn: "3d" })
 
-          //   console.log("!resultMatch: ", result);
-          //   return result;
-        } else {
-          // Create JWT
-          const jwToken = jwt.sign(
-            { id: isUser.id, email: isUser.emailAddress },
-            rs256Key,
-            { algorithm: "RS256", expiresIn: "3d" }
-            // (err, jwToken) => {
-            //   if (err) {
-            //     console.error("jwt err: ", err);
-            //   } else {
-            //     result.status = 200;
-            //     result.message = "Login successful";
-            //     result.jwt = jwToken;
-            //     //   console.log("log jwtsigned : ", result);
-            //   }
-            // }
-          );
+      result.status = 200;
+      result.message = "Login successful";
+      result.jwt = jwtToken;
+      // bcrypt.compare(password, isUser.passWord, (err, resultMatch) => {
+      //   // console.log("resultMatch", resultMatch);
+      //   if (err) {
+      //     console.error(err);
+      //     //   return
+      //   }
 
-          result.status = 200;
-          result.message = "Login successful";
-          result.jwt = jwToken;
+      //   if (!resultMatch) {
+      //     result.status = 400;
+      //     result.message = "Password is invalid";
 
-            console.log("Result in bcrypt: ", result);
-            return 
-        }
-      });
+      //     //   console.log("!resultMatch: ", result);
+      //     //   return result;
+      //   } else {
+      //     // Create JWT
+      //     const jwToken = jwt.sign(
+      //       { id: isUser.id, email: isUser.emailAddress },
+      //       rs256Key,
+      //       { algorithm: "RS256", expiresIn: "3d" }
+      //       // (err, jwToken) => {
+      //       //   if (err) {
+      //       //     console.error("jwt err: ", err);
+      //       //   } else {
+      //       //     result.status = 200;
+      //       //     result.message = "Login successful";
+      //       //     result.jwt = jwToken;
+      //       //     //   console.log("log jwtsigned : ", result);
+      //       //   }
+      //       // }
+      //     );
+
+      //     result.status = 200;
+      //     result.message = "Login successful";
+      //     result.jwt = jwToken;
+
+      //       console.log("Result in bcrypt: ", result);
+      //       return 
+      //   }
+      // });
 
       console.log("results after bcrypt: ", result);
       //   return result;
