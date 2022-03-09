@@ -6,21 +6,21 @@ const { Sequelize } = require("sequelize");
 //   host: "localhost",
 //   dialect: "postgres",
 // });
-sequelize = new Sequelize(process.env.DATABASE_URL, {
-    dialect: "postgres",
-  }
-);
+// const sequelize = new Sequelize(process.env.DATABASE_URL, {
+//     dialect: "postgres",
+//   }
+// );
 
-sequelize
-  .authenticate()
-  .then(() => {
-    console.log('Connection has been established successfully.');
-  })
-  .catch(err => {
-    console.error('Unable to connect to the database:', err);
-  });
+// sequelize
+//   .authenticate()
+//   .then(() => {
+//     console.log('Connection has been established successfully.');
+//   })
+//   .catch(err => {
+//     console.error('Unable to connect to the database:', err);
+//   });
 
-// const sequelize = new Sequelize("sqlite::memory:");
+const sequelize = new Sequelize("sqlite::memory:");
 
 
 // Test connection function
