@@ -11,12 +11,12 @@ module.exports = function (sequelize) {
         autoIncrement: true,
       },
 
-      userName: {
-        type: DataTypes.STRING,
-        allowNull: false,
-        unique: true,
-        field: "username",
-      },
+      // userName: {
+      //   type: DataTypes.STRING,
+      //   allowNull: false,
+      //   unique: true,
+      //   field: "username",
+      // },
 
       emailAddress: {
         type: DataTypes.STRING,

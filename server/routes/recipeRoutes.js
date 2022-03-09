@@ -9,17 +9,17 @@ const RecipeController = require("../controllers/recipeController");
 // Instantiate a new class instance
 const recipeController = new RecipeController();
 
-router
-  .route("/")
-  .get((request, response) => {
-    response.send("You have called the root route!");
-    // if (request.isAuthenticated()) {
-    //   response.send("You have called the root route!");
-    // } else {
-    //   response.redirect("/login");
-    // }
-  })
-  .get(recipeController.showAll);
+// router
+//   .route("/")
+//   .get((request, response) => {
+//     response.send("You have called the root route!");
+//     // if (request.isAuthenticated()) {
+//     //   response.send("You have called the root route!");
+//     // } else {
+//     //   response.redirect("/login");
+//     // }
+//   })
+//   .get(recipeController.showAll);
 
 router
   .route("/add")
