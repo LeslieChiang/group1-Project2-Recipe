@@ -1,5 +1,6 @@
-## Module 3 Project Proposal & Scopes: 
-# My Cooking-Recipes Web App
+# Module 3 Project Proposal & Scopes: 
+
+## My Cooking-Recipes Web App
 
 A web app that allows registered user to keep their secret recipes online which allow user to key their recipes with images.
 - allow user to list the 
@@ -19,6 +20,8 @@ A web app that allows registered user to keep their secret recipes online which 
 - Heroku PostgreSQL (Database for users registration & login, Database for recipes storage + images)
 - Server-less Deployment on Heroku
 
+![Backend Layers](./backend-layers.png)
+
 
 ## Scopes of work:
 - Software System Architecture => Leslie (Thursday 3/3) DONE
@@ -32,6 +35,11 @@ A web app that allows registered user to keep their secret recipes online which 
 - ORM-Sequelize + HerokuPostgres (refer to ERD) => Mani, Keith
 - Heroku Deployment.
 
+![Use Cases](./UseCaseRecipe.drawio.png)
+
+### ERD Update by Keith
+
+![ERD Keith](./ERDrecipe.drawio.PNG)
 
 ## Technologies used:
 - nodeJS
@@ -89,4 +97,10 @@ Project structure:
     router.route("/delete") // user.isAuthenticated() // priority Keith
     router.route("/search") // user.isAuthenticated() // Charles
 ```
+# Heroku access
 
+Heroku postgres db setup in progress, users table done. Herewith the steps to connect to it from your local.
+1. open terminal
+2. heroku login
+3. press any key open browser then key in credentials. Email: ch3group1@mail.com Password: ch3@group1
+4. heroku pg:psql postgresql-amorphous-45283 --app ecookbook
