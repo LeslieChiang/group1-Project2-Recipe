@@ -3,91 +3,107 @@
 // import service
 const receipeService = require("../services/recipeService");
 
-
-// establish the VehicleController first, then vehicleService
+// establish the RecipeController first, then recipeService
 class RecipeController {
-  // POST /protected/onboard {driverId:1, vehicleId:1}
-  // async onboard(req, res, next) {
-  //   console.log(typeof req.body.driverId, typeof req.body.vehicleId);
-  //   if (
-  //     typeof req.body.driverId !== "number" ||
-  //     typeof req.body.vehicleId !== "number"
-  //   ) {
-  //     res.status(400); // bad request
-  //     return res.json({ message: "Incorrect request data" });
-  //   }
+  async logout(req, res, next) {
+    // // // use the service layer
+    // const result = await userService.logout(req, res);
+    // res.status(result.status);
 
-  //   // use the service layer
-  //   // perform after RecipeController is working
-  //   const result = await vehicleService.onboard(
-  //     req.body.vehicleId,
-  //     req.body.driverId
-  //   );
-  //   res.status(result.status);
+    // // // Return results from service
+    // return res.redirect("/login");
+    req.logout();
+    res.redirect("/login");
+  }
 
-  //   // Return results from service
-  //   return res.json({ data: result.data, message: result.message });
-  // }
+  async add(req, res, next) {
+    const { title, ingredient } = req.body;
 
-  // async offboard(req, res, next) {
-  //   if (
-  //     // typeof req.body.driverId !== "number" ||
-  //     typeof req.body.vehicleId !== "number"
-  //   ) {
-  //     res.status(400); // bad request
-  //     return res.json({ message: "Incorrect request data" });
-  //   }
+    // test inputs
+    if (
+      typeof req.body.title !== "string" ||
+      typeof req.body.ingredient !== "string"
+    ) {
+      res.status(400); // bad request
+      return res.json({
+        message: "Incorrect inputs",
+      });
+    }
 
-  //   // use the service layer
-  //   // perform after RecipeController is working
-  //   const result = await vehicleService.offboard(req.body.vehicleId);
-  //   res.status(result.status);
+    // use the service layer
+    const result = await userService.add(title, ingredient);
 
-  //   // Return results from service
-  //   return res.json({ data: result.data, message: result.message });
-  // }
+    console.log("controller result: ", result);
+    res.redirect("/add");
+    return;
+  }
 
-  // async update(req, res, next) {
-  //   console.log(req.body);
-  //   if (
-  //     typeof req.body.vehicleId !== "number" ||
-  //     typeof req.body.type !== "string" ||
-  //     typeof req.body.carPlateNo !== "string"
-  //   ) {
-  //     res.status(400); // bad request
-  //     return res.json({ message: "Incorrect request data!" });
-  //   }
+  async edit(req, res, next) {
+    const { title, ingredient } = req.body;
 
-  //   // use the service layer
-  //   const result = await vehicleService.update(
-  //     req.body.vehicleId,
-  //     req.body.type,
-  //     req.body.carPlateNo
-  //   );
-  //   res.status(result.status);
+    // test inputs
+    if (
+      typeof req.body.title !== "string" ||
+      typeof req.body.ingredient !== "string"
+    ) {
+      res.status(400); // bad request
+      return res.json({
+        message: "Incorrect inputs",
+      });
+    }
 
-  //   // Return results from service
-  //   return res.json({ data: result.data, message: result.message });
-  // }
+    // use the service layer
+    const result = await userService.edit(title, ingredient);
 
-  // // delete driver by Id
-  // async deleteDriver(req, res, next) {
-  //   // console.log("Driver ID: ", typeof req.params.driverId);
+    console.log("controller result: ", result);
+    res.redirect("/edit");
+    return;
+  }
 
-  //   // use the service layer
-  //   const result = await vehicleService.deleteDriver(req.params.driverId);
-  //   res.status(result.status);
-  //   // Return results from service
-  //   return res.json({ data: result.data, message: result.message });
-  // }
+  async delete(req, res, next) {
+    const { title, ingredient } = req.body;
 
-  // // create a function table inside the class called showAll to call the service showAll to get data
-  // async showAll(req, res, next) {
-  //   // no need for any req.body or req.params because we are showing full data
-  //   const result = await vehicleService.showAll();
-  //   res.status = result.status;
-  //   return res.json({ data: result.data, message: result.message });
-  // }
+    // test inputs
+    if (
+      typeof req.body.title !== "string" ||
+      typeof req.body.ingredient !== "string"
+    ) {
+      res.status(400); // bad request
+      return res.json({
+        message: "Incorrect inputs",
+      });
+    }
+
+    // use the service layer
+    const result = await userService.delete(title, ingredient);
+
+    console.log("controller result: ", result);
+    res.redirect("/delete");
+    return;
+}
+
+async showAll(req, res, next) {
+  const { title, ingredient } = req.body;
+
+  // test inputs
+  if (
+    typeof req.body.title !== "string" ||
+    typeof req.body.ingredient !== "string"
+  ) {
+    res.status(400); // bad request
+    return res.json({
+      message: "Incorrect inputs",
+    });
+  }
+
+  // use the service layer
+  const result = await userService.showAll(title, ingredient);
+
+  console.log("controller result: ", result);
+  res.redirect("/showAll");
+  return;
+}
+
 }
 
 module.exports = RecipeController;
