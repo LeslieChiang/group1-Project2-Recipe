@@ -20,6 +20,8 @@ A web app that allows registered user to keep their secret recipes online which 
 - Heroku PostgreSQL (Database for users registration & login, Database for recipes storage + images)
 - Server-less Deployment on Heroku
 
+![Backend Layers](./backend-layers.png)
+
 
 ## Scopes of work:
 - Software System Architecture => Leslie (Thursday 3/3) DONE
