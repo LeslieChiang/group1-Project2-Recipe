@@ -19,7 +19,9 @@ router
     //   response.redirect("/login");
     // }
   })
-  .get(recipeController.showAll);
+  .get(recipeController.showIngredient)
+  .get(recipeController.showRecipe);
+  
 
 router
   .route("/add")
