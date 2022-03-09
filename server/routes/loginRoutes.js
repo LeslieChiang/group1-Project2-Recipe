@@ -10,13 +10,16 @@ const passportJwt = require("passport-jwt");
 const ExtractJwt = passportJwt.ExtractJwt;
 const StrategyJwt = passportJwt.Strategy;
 
+const fs = require("fs");
+
 const User = require("../models");
 
+const key = fs.readFileSync(process.env.SECRET_KEY);
 passport.use(
   new StrategyJwt(
     {
       jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
-      secretOrKey: process.env.SECRET_KEY,
+      secretOrKey: key,
     },
     (jwtPayload, callback) => {
       return User.findOne({ where: { id: jwtPayload.id } })
@@ -94,27 +97,27 @@ router
     }
   );
 
-//   const authenticateWithJwt = (req, res, next) => {
-//     passport.authenticate('jwt', {session: false}, (error, jwt_payload) => {
-//         if (error) {
-//             return next(error);
-//         }
+  const authenticateWithJwt = (req, res, next) => {
+    passport.authenticate('jwt', {session: false}, (error, jwt_payload) => {
+        if (error) {
+            return next(error);
+        }
 
-//         User.findOne({id: jwt_payload.id}, (err, user) => {
-//             if (err || !user) {
-//                 return next(err || new Error('Could not find user'));
-//             }
+        User.findOne({id: jwt_payload.id}, (err, user) => {
+            if (err || !user) {
+                return next(err || new Error('Could not find user'));
+            }
 
-//             next(user);
-//         });
-//     })(req, res);
-// };
+            next(user);
+        });
+    })(req, res);
+};
 
-// router.get('/protected', authenticateWithJwt, (req, res) => {
-//     res.status(200).json({message: 'it works!'});
-// });
+router.get("/", authenticateWithJwt, (req, res) => {
+    res.status(200).json({message: 'it works!'});
+});
 
-// router.put("/protected/recipe", recipeController.update);
-// router.delete("/protected/driver/:driverId", recipeController.deleteDriver);
+
+
 
 module.exports = router;
