@@ -16,6 +16,14 @@ class RecipeController {
     res.redirect("/login");
   }
 
+  async getAllUsers (req, res) {
+    let Users = await users.findAll({})
+    res.status(200).send(users)
+  }
+  
+
+
+
   async add(req, res, next) {
     const { title, ingredient } = req.body;
 
@@ -80,30 +88,25 @@ class RecipeController {
     console.log("controller result: ", result);
     res.redirect("/delete");
     return;
-}
-
-async showAll(req, res, next) {
-  const { title, ingredient } = req.body;
-
-  // test inputs
-  if (
-    typeof req.body.title !== "string" ||
-    typeof req.body.ingredient !== "string"
-  ) {
-    res.status(400); // bad request
-    return res.json({
-      message: "Incorrect inputs",
-    });
   }
 
-  // use the service layer
-  const result = await userService.showAll(title, ingredient);
+  async showIngredient(req, res, next) {
+    // use the service layer
+    const result = await userService.showIngredient();
 
-  console.log("controller result: ", result);
-  res.redirect("/showAll");
-  return;
-}
+    console.log("controller result showIngredient: ", result);
+    res.redirect("/showIngredient");
+    return;
+  }
 
+  async showRecipe(req, res, next) {
+    // use the service layer
+    const result = await userService.showRecipe();
+
+    console.log("controller result showRecipe: ", result);
+    res.redirect("/showRecipe");
+    return;
+  }
 }
 
 module.exports = RecipeController;
