@@ -1,7 +1,7 @@
 // control logic and Return results from service.model
 
 // import service
-const receipeService = require("../services/recipeService");
+const recipeService = require("../services/recipeService");
 
 // establish the RecipeController first, then recipeService
 class RecipeController {
@@ -84,16 +84,16 @@ class RecipeController {
 
   async showIngredient(req, res, next) {
     // use the service layer
-    const result = await userService.showIngredient();
+    const result = await recipeService.showIngredient();
 
     console.log("controller result showIngredient: ", result);
-    res.redirect("/showIngredient");
+    // res.redirect("/showIngredient");
     return;
   }
 
   async showRecipe(req, res, next) {
     // use the service layer
-    const result = await userService.showRecipe();
+    const result = await recipeService.showRecipe();
 
     console.log("controller result showRecipe: ", result);
     res.redirect("/showRecipe");

@@ -10,17 +10,12 @@ const RecipeController = require("../controllers/recipeController");
 const recipeController = new RecipeController();
 
 router
-  .route("/")
-  .get((request, response) => {
-    response.send("You have called the root route!");
-    // if (request.isAuthenticated()) {
-    //   response.send("You have called the root route!");
-    // } else {
-    //   response.redirect("/login");
-    // }
-  })
+  .route("/recipe/showIngredient")
+  // .get((request, response) => {
+  //   response.send("You have called the showIngredient route!");
+  // })
   .get(recipeController.showIngredient)
-  .get(recipeController.showRecipe);
+  // .get(recipeController.showRecipe);
   
 
 router

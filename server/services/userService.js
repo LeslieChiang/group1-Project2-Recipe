@@ -88,12 +88,16 @@ module.exports = {
 
     if (isUser) {
       // Verify user password
-      
+
       const match = bcrypt.compareSync(password, isUser.passWord);
-      if(!match) throw new Error("password does not match");
+      if (!match) throw new Error("password does not match");
 
       const key = fs.readFileSync(rs256Key);
-      const jwtToken = jwt.sign({ id: isUser.id, email: isUser.emailAddress }, key,{ algorithm: "RS256", expiresIn: "3d" })
+      const jwtToken = jwt.sign(
+        { id: isUser.id, email: isUser.emailAddress },
+        key,
+        { algorithm: "RS256", expiresIn: "3d" }
+      );
 
       result.status = 200;
       result.message = "Login successful";
@@ -134,12 +138,10 @@ module.exports = {
       //     result.jwt = jwToken;
 
       //       console.log("Result in bcrypt: ", result);
-      //       return 
+      //       return
       //   }
       // });
-
-      console.log("results after bcrypt: ", result);
-      //   return result;
+      // console.log("results after bcrypt: ", result);
     }
 
     console.log("login results from userService: ", result);

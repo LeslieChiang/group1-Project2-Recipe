@@ -56,7 +56,7 @@ require("dotenv").config();
 
 
 
-// const recipeRoutes = require("./recipeRoutes");
+const recipeRoutes = require("./recipeRoutes");
 const loginRoutes = require("./loginRoutes");
 
 
@@ -71,7 +71,7 @@ app.use(
   })
 );
 
-// app.use(recipeRoutes);
+app.use(recipeRoutes);
 app.use(loginRoutes);
 
 module.exports = app;

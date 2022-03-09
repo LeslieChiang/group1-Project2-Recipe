@@ -1,13 +1,7 @@
 // Import sequelize
 const { Sequelize } = require("sequelize");
 
-// // DB Connection Configuration
-// const sequelize = new Sequelize("project", "leslie", "", {
-//   host: "localhost",
-//   dialect: "postgres",
-// });
-
-
+// const sequelize = new Sequelize("sqlite::memory:");
 const sequelize = new Sequelize(process.env.DATABASE_URL, {
   dialectOptions: {
     ssl: {
@@ -27,19 +21,13 @@ sequelize
   console.error('Unable to connect to the database:', err);
 });
 
-
-
-// sequelize
-//   .authenticate()
-//   .then(() => {
-//     console.log('Connection has been established successfully.');
-//   })
-//   .catch(err => {
-//     console.error('Unable to connect to the database:', err);
-//   });
-
-// const sequelize = new Sequelize("sqlite::memory:");
-
+////
+// connect to heroku postgresql in local.
+// (1) open terminal
+// (2) heroku login
+// (3) press any key open browser then key in credentials. Email: ch3group1@mail.com Password: ch3@group1
+// (4) heroku pg:psql postgresql-amorphous-45283 --app ecookbook
+////
 
 // Test connection function
 async function testConnection() {
@@ -89,8 +77,3 @@ module.exports = {
 };
 
 
-//connect to heroku postgresql in local.
-// (1) open terminal
-// (2) heroku login
-// (3) press any key open browser then key in credentials. Email: ch3group1@mail.com Password: ch3@group1
-// (4) heroku pg:psql postgresql-amorphous-45283 --app ecookbook
