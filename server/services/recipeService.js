@@ -7,6 +7,9 @@ const {
   RecipeIngredientInter,
 } = require("../models");
 
+Recipe.sync({ alter: true }).then(() => console.log("Database is ready"));
+
+
 module.exports = {
   add: async (vehicleId) => {
     // the result object is where we will put the result to be sent to the client
@@ -135,7 +138,7 @@ module.exports = {
 
     const resultUser = await User.findAll();
     console.log("\n attribute", JSON.stringify(resultUser));
-    
+
     result.message = "Data fetched successfully from DB";
     result.status = 200;
     result.data = resultUser;
