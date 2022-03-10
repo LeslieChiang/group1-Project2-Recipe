@@ -7,43 +7,27 @@ const { Recipe, Ingredient, RecipeIngredientInter } = require("../models");
 // console.log("User: ", User);
 
 module.exports = {
-  add: async (vehicleId) => {
+  
+  // add: async (vehicleId) => { 
+  add: async (title, method, ingredientList) => {
     // the result object is where we will put the result to be sent to the client
     let result = {
       message: null,
       status: null,
       data: null,
     };
-
-    // // look for recipe in the database
-    // const vehicle = await Vehicle.findByPk(vehicleId);
-
-    // // - check if driver and vehicle exists
-    // if (!vehicle) {
-    //   result.message = `vehicle ID ${vehicleId} is not found!`;
-    //   result.status = 404;
-    //   return result;
-    // }
-
-    // // if found vehicle has a driver
-    // if (vehicle.driverId) {
-    //   result.message = `Vehicle ID ${vehicle.id} has driver ${vehicle.driverId} onboard. Offboarding driver!`;
-    //   vehicle.driverId = null;
-    //   await vehicle.save(); // update the vehicle
-    //   result.data = vehicle;
-    //   result.status = 200;
-    //   return result;
-    // }
-
-    // // if found vehicle has no driver
-    // if (!vehicle.driverId) {
-    //   result.message = `Vehicle ID ${vehicle.id} has no driver to offboard!`;
-    //   result.status = 400;
-    //   return result;
-    // }
+    console.log('recipeService.add: {title}', title);
+    const newRecipe = await Recipe.create({
+      userId: 3,   // Needs to pull userID from User
+      imageId: '',
+      recipeTitle: title,
+      // cuisineType: '',
+      // dishGroup: '',  
+      cookingSteps: method  
+    })
   },
 
-  edit: async (vehicleId, type, carPlateNo) => {
+  edit: async (recipeId, method, ingredientList) => {
     // the result object is where we will put the result to be sent to the client
     let result = {
       message: null,

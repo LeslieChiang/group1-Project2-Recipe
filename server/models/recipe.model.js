@@ -2,7 +2,7 @@ const { DataTypes, Model } = require("sequelize");
 
 module.exports = function (sequelize) {
   class Recipe extends Model {}
-
+  console.log('recipe.model.js->Recipe class');
   Recipe.init(
     {
       id: {
@@ -18,7 +18,7 @@ module.exports = function (sequelize) {
       },
 
       imageId: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.STRING,
         allowNull: false,
         field: "image_id",
       },
@@ -30,20 +30,20 @@ module.exports = function (sequelize) {
         field: "recipe_title",
       },
 
-      cuisineType: {
-        type: DataTypes.STRING,
-        allowNull: false,
-        field: "cuisine_type",
-      },
+      // cuisineType: {
+      //   type: DataTypes.STRING,
+      //   allowNull: false,
+      //   field: "cuisine_type",
+      // },
 
-      dishGroup: {
-        type: DataTypes.STRING,
-        allowNull: false,
-        field: "dish_group",
-      },
+      // dishGroup: {
+      //   type: DataTypes.STRING,
+      //   allowNull: false,
+      //   field: "dish_group",
+      // },
 
       cookingSteps: {
-        type: DataTypes.STRING,
+        type: DataTypes.TEXT,
         allowNull: false,
         field: "cooking_steps",
       },

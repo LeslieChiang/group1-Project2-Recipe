@@ -1,6 +1,7 @@
 // Import sequelize
 const { Sequelize } = require("sequelize");
 
+<<<<<<< Updated upstream
 // // DB Connection Configuration
 // const sequelize = new Sequelize("project", "leslie", "", {
 //   host: "localhost",
@@ -10,6 +11,19 @@ sequelize = new Sequelize(process.env.DATABASE_URL, {
     dialect: "postgres",
   }
 );
+=======
+const sequelize = new Sequelize("sqlite::memory:");
+
+// const sequelize = new Sequelize(process.env.DATABASE_URL, {
+//   dialectOptions: {
+//     ssl: {
+//       require: true,
+//       rejectUnauthorized: false
+//     }
+//   }
+// }
+// );
+>>>>>>> Stashed changes
 
 sequelize
   .authenticate()
