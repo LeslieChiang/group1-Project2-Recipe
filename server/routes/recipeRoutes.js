@@ -46,7 +46,7 @@ router
   .put(recipeController.edit);
 
 router
-  .route("/delete")
+  .route("/recipe/delete/:recipeId")
   .get((request, response) => {
     response.send("You have called the DELETE route!");
   })
