@@ -1,3 +1,5 @@
+// Work-in-progress
+
 const passport = require("passport");
 const passportJwt = require("passport-jwt");
 const ExtractJwt = passportJwt.ExtractJwt;
@@ -6,7 +8,7 @@ const StrategyJwt = passportJwt.Strategy;
 
 
 const fs = require("fs");
-const User = require("../models");
+const { User } = require("../models");
 const key = fs.readFileSync(process.env.SECRET_KEY);
 passport.use(
   new StrategyJwt(
