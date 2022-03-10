@@ -12,6 +12,7 @@ Ingredient.sync({ alter: true }).then(() => console.log("Database is ready"));
 RecipeIngredientInter.sync({ alter: true }).then(() => console.log("Database is ready"));
 
 module.exports = {
+  // Add recipe
   add: async (userId, title, method, ingredientList) => {
     // the result object is where we will put the result to be sent to the client
     console.log('recipeService.add: {title}', title);
@@ -21,15 +22,29 @@ module.exports = {
       data: null,
     };
     const newRecipe = await Recipe.create({
-      userId: userId,   // Needs to pull userID from User
+      userId: userId,   
       recipeTitle: title,
       cookingSteps: method        
-    })
+    });
+
+    // Add items from ingredientList
+    for (let item of ingredientList ) {
+      await RecipeIngredientInter.create({
+        recipeId: newRecipe.id,
+        ingredientId: item.ingredientId,
+        ingredientQuantity: item.quantity   
+      })
+    }
+
+    result.status = 200;
+    result.message = `Recipe added: ${title}`;
+    console.log('recipeService.add: {result}', result);
     return result;
   },
 
+  // Edit recipe
   edit: async (recipeId, userId, title, method, ingredientList) => {
-    console.log('recipeService.edit: {recipeId, title}', recipe, title);
+    console.log('recipeService.edit: {recipeId, title}', recipeId, title);
     // the result object is where we will put the result to be sent to the client
     let result = {
       message: null,
@@ -39,23 +54,25 @@ module.exports = {
 
     // Look for recipe in the database
     const recipe = await Recipe.findByPk(recipeId);
-
+    console.log(`recipeService->edit(${recipeId})`, recipe);
     if (!recipe) {
-      result.message = `Recipe ID ${recipe.id} is not found!`;
+      result.message = `Recipe ID ${recipeId} is not found!`;
       result.status = 404;
       return result;
     }
 
-    // // if found vehicle (id | type | car_plate_no)
-    // if (vehicle) {
-    //   vehicle.type = type;
-    //   vehicle.carPlateNo = carPlateNo;
-    //   await vehicle.save(); // update the vehicle
-    //   result.message = `Updated Vehicle ID ${vehicle.id}!`;
-    //   result.data = vehicle;
-    //   result.status = 200;
-    //   return result;
-    // }
+    // Edit recipe details when found 
+    if (recipe) {
+      recipe.userId = userId,   
+      recipe.recipeTitle = title,
+      recipe.cookingSteps = method        
+      await recipe.save(); // update the vehicle
+
+      result.message = `Updated recipe ID ${recipeId}!`;
+      result.data = recipe;
+      result.status = 200;
+      return result;
+    }
   },
 
   delete: async (driverId) => {

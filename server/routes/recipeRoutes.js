@@ -39,7 +39,7 @@ router
   .post(recipeController.add);
 
 router
-  .route("/recipe/edit")
+  .route("/recipe/edit/:recipeId")
   .get((request, response) => {
     response.send("You have called the EDIT route!");
   })

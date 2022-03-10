@@ -28,21 +28,29 @@ class RecipeController {
     const result = await recipeService.add(userId, title, method, ingredientList);
     console.log('recipeController->add() result:', result);
     // res.redirect("/add");
-    return;
+    return res.json({
+      message: `${title} recipe successfully added.`
+    });
   }
 
   async edit(req, res, next) {
     const { recipeId } = req.params;
-    const { title, ingredientList } = req.body;
+    const { userId, title, method, ingredientList } = req.body;
 
-    // test inputs
+    // Validate inputs
+    console.log('RecipeController.edit { userId } =', userId);
+    console.log('RecipeController.edit { title } =', title);
+    console.log('RecipeController.edit { method } =', method);
+    console.log('RecipeController.edit { ingredientList } =', ingredientList);
     if (
+      typeof req.body.userId !== "number" ||
       typeof req.body.title !== "string" ||
-      typeof req.body.ingredientList !== "object"
+      typeof req.body.method !== "string" ||
+      typeof req.body.ingredientList !== "object"  
     ) {
       res.status(400); // bad request
       return res.json({
-        message: "Incorrect inputs",
+        message: "RecipeController.edit: Incorrect inputs",
       });
     }
 
