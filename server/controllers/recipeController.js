@@ -27,52 +27,68 @@ class RecipeController {
     // Use the service layer
     const result = await recipeService.add(userId, title, method, ingredientList);
     console.log('recipeController->add() result:', result);
-    // res.redirect("/add");
-    return;
+    return res.json({
+      message: `${title} recipe successfully added.`
+    });
   }
 
   async edit(req, res, next) {
     const { recipeId } = req.params;
-    const { title, ingredientList } = req.body;
+    const { userId, title, method, ingredientList } = req.body;
 
-    // test inputs
+    // Validate inputs
+    console.log('RecipeController.edit { userId } =', userId);
+    console.log('RecipeController.edit { title } =', title);
+    console.log('RecipeController.edit { method } =', method);
+    console.log('RecipeController.edit { ingredientList } =', ingredientList);
     if (
+      typeof req.body.userId !== "number" ||
       typeof req.body.title !== "string" ||
-      typeof req.body.ingredientList !== "object"
+      typeof req.body.method !== "string" ||
+      typeof req.body.ingredientList !== "object"  
     ) {
       res.status(400); // bad request
       return res.json({
-        message: "Incorrect inputs",
+        message: "RecipeController.edit: Incorrect inputs",
       });
     }
 
     // use the service layer
-    const result = await recipeService.edit(recipeId, title, ingredientList);
+    const result = await recipeService.edit(recipeId, userId, title, method, ingredientList);
     console.log("recipeController->edit() result: ", result);
-    // res.redirect("/edit");
-    return;
+    return res.json({
+      message: result.message
+    });
   }
 
-  async delete(req, res, next) {
-    const { title, ingredient } = req.body;
+  // async delete(req, res, next) {
+  //   const { title, ingredient } = req.body;
 
-    // test inputs
-    if (
-      typeof req.body.title !== "string" ||
-      typeof req.body.ingredient !== "string"
-    ) {
-      res.status(400); // bad request
-      return res.json({
-        message: "Incorrect inputs",
-      });
-    }
+  //   // test inputs
+  //   if (
+  //     typeof req.body.title !== "string" ||
+  //     typeof req.body.ingredient !== "string"
+  //   ) {
+  //     res.status(400); // bad request
+  //     return res.json({
+  //       message: "Incorrect inputs",
+  //     });
+  //   }
 
+  //   // use the service layer
+  //   const result = await recipeService.delete(title, ingredient);
+
+  //   console.log("controller result: ", result);
+  //   res.redirect("/delete");
+  //   return;
+  // }
+
+  async deleteRecipe(req, res, next) {
     // use the service layer
-    const result = await recipeService.delete(title, ingredient);
-
-    console.log("controller result: ", result);
-    res.redirect("/delete");
-    return;
+    const result = await recipeService.deleteRecipe(req.params.recipeID);
+    res.status(result.status);
+    // Return results from service
+    return res.json({ data: result.data, message: result.message });
   }
 
   async showIngredient(req, res, next) {
@@ -80,10 +96,8 @@ class RecipeController {
     const result = await recipeService.showIngredient();
 
     console.log("controller result showIngredient: ", result);
-
-    
-    res.send({ status: result.status, message: result.message });
-    // return;
+    // return res.json({ status: result.status, message: result.message });
+    return result;
   }
 
   async showRecipe(req, res, next) {
@@ -94,6 +108,18 @@ class RecipeController {
 
     return;
   }
+
+  async showUserRecipe(req, res, next) {
+    // use the service layer
+    const result = await recipeService.showUserRecipe();
+
+    console.log("controller result showUserRecipe: ", result);
+
+    return;
+  }
+
 }
+
+
 
 module.exports = RecipeController;
