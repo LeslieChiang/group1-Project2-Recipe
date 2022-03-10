@@ -46,13 +46,13 @@ A web app that allows registered user to keep their secret recipes online which 
 - ExpressJS
   - Middleware
   - Routing
-  - Cookies & Session
+  - Cookies & Session // not use
 - SequelizeJS
   - ORM
   - Queries
 - Application Security (Passport, Bcrypt & JWT) - 
   - Authentication
-  - Passport.js session 
+  - Passport.js session // not use
 - Model View Controller Architecture
 
 
@@ -83,20 +83,22 @@ Project structure:
 ## Required End-points
 - User-login
 ```javascript
-    router.route("/register") // added Leslie
-    router.route("/login") // priority Liew
-    router.route("/logout") // priority added Liew
+    router.route("/register") // priority Liew/Leslie
+    router.route("/login") // priority Leslie
+    router.route("/logout") 
     router.route("/resetpassword") 
     router.route("/deleteUser")
 ```
 - Recipe
 ```javascript
-    router.route("/") // route to /login if user not login // priority Mani
-    router.route("/add") // user.isAuthenticated() // priority CP
-    router.route("/edit") // user.isAuthenticated() // priority CP
-    router.route("/delete") // user.isAuthenticated() // priority Keith
-    router.route("/search") // user.isAuthenticated() // Charles
+    router.route("/recipe/showIngredient") // priority Mani
+    router.route("/recipe/showRecipe") // priority Mani
+    router.route("/recipe/add") // user.isAuthenticated() // priority CP
+    router.route("/recipe/edit/:recipeId") // user.isAuthenticated() // priority CP
+    router.route("/recipe/delete/:userId") // user.isAuthenticated() // priority Keith
+    router.route("/search") // Charles
 ```
+
 # Heroku access
 
 Heroku postgres db setup in progress, users table done. Herewith the steps to connect to it from your local.
