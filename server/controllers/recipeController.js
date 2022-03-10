@@ -89,7 +89,7 @@ class RecipeController {
 
     console.log("controller result showIngredient: ", result);
     // return res.json({ status: result.status, message: result.message });
-    return;
+    return result;
   }
 
   async showRecipe(req, res, next) {
@@ -100,6 +100,18 @@ class RecipeController {
 
     return;
   }
+
+  async showUserRecipe(req, res, next) {
+    // use the service layer
+    const result = await recipeService.showUserRecipe();
+
+    console.log("controller result showUserRecipe: ", result);
+
+    return;
+  }
+
 }
+
+
 
 module.exports = RecipeController;

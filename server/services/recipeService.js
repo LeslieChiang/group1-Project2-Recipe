@@ -126,14 +126,6 @@ module.exports = {
       data: null,
     };
 
-    // const resultIngredient = await Ingredient.findAll();
-    // console.log("\n attribute", JSON.stringify(resultIngredient));
-
-    // result.message = "Data fetched successfully from DB";
-    // result.status = 200;
-    // result.data = resultIngredient; // this would be all the ingredient from the DB
-    // console.log("Service result - showIngredient: ", result);
-
     const resultUser = await User.findAll();
     console.log("\n attribute", JSON.stringify(resultUser));
 
@@ -161,7 +153,6 @@ module.exports = {
     console.log("Service result - showRecipe: ", JSON.stringify(result));
 
     return result;
-
     // // connect to DB and query the list of vehicles
     // const data = await Vehicle.findAll({
     //   include: [
@@ -171,4 +162,30 @@ module.exports = {
     //   ],
     // });
   },
+
+
+  showUserRecipe: async () => {
+    // the result object is where we will put the result to be sent to the client
+    let result = {
+      message: null,
+      status: null,
+      data: null,
+    };
+
+    const resultRecipe = await Recipe.findAll();
+    console.log("\n attribute", JSON.stringify(resultRecipe));
+
+    result.message = "Data fetched successfully from DB";
+    result.status = 200;
+    result.data = resultRecipe; // this would be all the Recipe from the DB
+    console.log("Service result - showUserRecipe: ", JSON.stringify(result));
+
+    return result;
+  },
+
+
+
+
+
+
 };
