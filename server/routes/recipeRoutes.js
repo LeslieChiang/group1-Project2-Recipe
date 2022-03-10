@@ -25,7 +25,7 @@ router.route("/recipe/showUserRecipe").get((request, response) => {
 });
 
 router
-  .route("/add")
+  .route("/recipe/add")
   .get((request, response) => {
     response.send("You have called the ADD route!");
     // if (request.isAuthenticated()) {
@@ -37,7 +37,7 @@ router
   .post(recipeController.add);
 
 router
-  .route("/edit")
+  .route("/recipe/edit")
   .get((request, response) => {
     response.send("You have called the EDIT route!");
   })

@@ -41,13 +41,13 @@ salt to taste
     id: 2, name: 'Chicken Rice', cuisine: 'Hainanese', dish: 'Main Course', 
     imageUrl: '',
     ingredients: 
-    `1 large whole chicken 
-5cm fresh unpeeled ginger
-2 tsp salt
+    `1 large whole chicken {5}
+5cm fresh unpeeled ginger {15}
+2 tsp salt {21}
 1/2  tsp monosodium glutamate, or 1 tsp chicken stock powder (optional)
-1 tbsp sesame oil
-coriander, to serve
-sliced cucumber, to serve
+1 tbsp sesame oil {22}
+coriander, to serve 
+sliced cucumber, to serve {12}
 
 Ginger and spring onion oil
 - 2 tbsp fresh grated ginger
@@ -56,7 +56,7 @@ Ginger and spring onion oil
 - ¼ cup peanut oil
       
 Chicken Rice
-- 3 1/3 cups (675g) jasmine rice
+- 3 1/3 cups (675g) jasmine rice {16}
 - 1/4 cup (approx.) vegetable oil
 - 4 garlic cloves
 - 2 schallots, roughly sliced (or 1 brown onion, roughly sliced)

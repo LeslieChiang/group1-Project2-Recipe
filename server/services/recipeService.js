@@ -12,43 +12,24 @@ Ingredient.sync({ alter: true }).then(() => console.log("Database is ready"));
 RecipeIngredientInter.sync({ alter: true }).then(() => console.log("Database is ready"));
 
 module.exports = {
-  add: async (vehicleId) => {
+  add: async (userId, title, method, ingredientList) => {
     // the result object is where we will put the result to be sent to the client
+    console.log('recipeService.add: {title}', title);
     let result = {
       message: null,
       status: null,
       data: null,
     };
-
-    // // look for recipe in the database
-    // const vehicle = await Vehicle.findByPk(vehicleId);
-
-    // // - check if driver and vehicle exists
-    // if (!vehicle) {
-    //   result.message = `vehicle ID ${vehicleId} is not found!`;
-    //   result.status = 404;
-    //   return result;
-    // }
-
-    // // if found vehicle has a driver
-    // if (vehicle.driverId) {
-    //   result.message = `Vehicle ID ${vehicle.id} has driver ${vehicle.driverId} onboard. Offboarding driver!`;
-    //   vehicle.driverId = null;
-    //   await vehicle.save(); // update the vehicle
-    //   result.data = vehicle;
-    //   result.status = 200;
-    //   return result;
-    // }
-
-    // // if found vehicle has no driver
-    // if (!vehicle.driverId) {
-    //   result.message = `Vehicle ID ${vehicle.id} has no driver to offboard!`;
-    //   result.status = 400;
-    //   return result;
-    // }
+    const newRecipe = await Recipe.create({
+      userId: userId,   // Needs to pull userID from User
+      recipeTitle: title,
+      cookingSteps: method        
+    })
+    return result;
   },
 
-  edit: async (vehicleId, type, carPlateNo) => {
+  edit: async (recipeId, userId, title, method, ingredientList) => {
+    console.log('recipeService.edit: {recipeId, title}', recipe, title);
     // the result object is where we will put the result to be sent to the client
     let result = {
       message: null,
@@ -56,15 +37,14 @@ module.exports = {
       data: null,
     };
 
-    // // look for vehicle in the database
-    // const vehicle = await Vehicle.findByPk(vehicleId);
+    // Look for recipe in the database
+    const recipe = await Recipe.findByPk(recipeId);
 
-    // // - check if vehicle exists
-    // if (!vehicle) {
-    //   result.message = `vehicle ID ${vehicle.id} is not found!`;
-    //   result.status = 404;
-    //   return result;
-    // }
+    if (!recipe) {
+      result.message = `Recipe ID ${recipe.id} is not found!`;
+      result.status = 404;
+      return result;
+    }
 
     // // if found vehicle (id | type | car_plate_no)
     // if (vehicle) {

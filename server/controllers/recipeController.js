@@ -6,34 +6,39 @@ const recipeService = require("../services/recipeService");
 // establish the RecipeController first, then recipeService
 class RecipeController {
   async add(req, res, next) {
-    const { title, ingredient } = req.body;
-
-    // test inputs
+    const { userId, title, method, ingredientList } = req.body;
+    // Validate inputs
+    console.log('RecipeController.add { userId } =', userId);
+    console.log('RecipeController.add { title } =', title);
+    console.log('RecipeController.add { method } =', method);
+    console.log('RecipeController.add { ingredientList } =', ingredientList);
     if (
+      typeof req.body.userId !== "number" ||
       typeof req.body.title !== "string" ||
-      typeof req.body.ingredient !== "string"
+      typeof req.body.method !== "string" ||
+      typeof req.body.ingredientList !== "object"  
     ) {
       res.status(400); // bad request
       return res.json({
-        message: "Incorrect inputs",
+        message: "RecipeController.add: Incorrect inputs",
       });
     }
 
-    // use the service layer
-    const result = await recipeService.add(title, ingredient);
-
-    console.log("controller result: ", result);
-    res.redirect("/add");
+    // Use the service layer
+    const result = await recipeService.add(userId, title, method, ingredientList);
+    console.log('recipeController->add() result:', result);
+    // res.redirect("/add");
     return;
   }
 
   async edit(req, res, next) {
-    const { title, ingredient } = req.body;
+    const { recipeId } = req.params;
+    const { title, ingredientList } = req.body;
 
     // test inputs
     if (
       typeof req.body.title !== "string" ||
-      typeof req.body.ingredient !== "string"
+      typeof req.body.ingredientList !== "object"
     ) {
       res.status(400); // bad request
       return res.json({
@@ -42,10 +47,9 @@ class RecipeController {
     }
 
     // use the service layer
-    const result = await recipeService.edit(title, ingredient);
-
-    console.log("controller result: ", result);
-    res.redirect("/edit");
+    const result = await recipeService.edit(recipeId, title, ingredientList);
+    console.log("recipeController->edit() result: ", result);
+    // res.redirect("/edit");
     return;
   }
 
