@@ -6,7 +6,7 @@ require("dotenv").config();
 // const passport = require("./passport");
 
 const recipeRoutes = require("./recipeRoutes");
-const loginRoutes = require("./loginRoutes");
+// const loginRoutes = require("./loginRoutes");
 
 
 const app = express();
@@ -21,6 +21,6 @@ app.use(
 );
 
 app.use(recipeRoutes);
-app.use(loginRoutes);
+// app.use(loginRoutes);
 
 module.exports = app;

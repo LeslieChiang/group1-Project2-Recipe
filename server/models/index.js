@@ -1,17 +1,13 @@
 // Import sequelize
 const { Sequelize } = require("sequelize");
 
-<<<<<<< Updated upstream
-// // DB Connection Configuration
-// const sequelize = new Sequelize("project", "leslie", "", {
-//   host: "localhost",
-//   dialect: "postgres",
-// });
-sequelize = new Sequelize(process.env.DATABASE_URL, {
-    dialect: "postgres",
-  }
-);
-=======
+// DB Connection Configuration
+
+// const sequelize = new Sequelize(process.env.DATABASE_URL, {
+//     dialect: "postgres",
+//   }
+// );
+
 const sequelize = new Sequelize("sqlite::memory:");
 
 // const sequelize = new Sequelize(process.env.DATABASE_URL, {
@@ -23,7 +19,6 @@ const sequelize = new Sequelize("sqlite::memory:");
 //   }
 // }
 // );
->>>>>>> Stashed changes
 
 sequelize
   .authenticate()
@@ -50,20 +45,20 @@ async function testConnection() {
 }
 
 // Import model(s)
-const User = require("./user.model")(sequelize);
+// const User = require("./user.model")(sequelize);
 const Recipe = require("./recipe.model")(sequelize);
 const Ingredient = require("./ingredient.model")(sequelize);
 const RecipeIngredientInter = require("./recipe_ingredient_inter.model")(sequelize);
-const Image = require("./image.model")(sequelize);
+// const Image = require("./image.model")(sequelize);
 
 // Create associations *** Keith, Mani
-Recipe.belongsTo(User, {
-  foreignKey: "user_id",
-});
+// Recipe.belongsTo(User, {
+//   foreignKey: "user_id",
+// });
 
-Recipe.belongsTo(Image, {
-  foreignKey: "image_id",
-});
+// Recipe.belongsTo(Image, {
+//   foreignKey: "image_id",
+// });
 
 RecipeIngredientInter.belongsTo(Recipe, {
   foreignKey: "recipe_id",
@@ -78,10 +73,10 @@ module.exports = {
   sequelize,
   testConnection,
   Recipe,
-  User,
+  // User,
   Ingredient,
   RecipeIngredientInter,
-  Image,
+  // Image,
 };
 
 

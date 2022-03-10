@@ -33,16 +33,9 @@ class RecipeController {
       });
     }
 
-<<<<<<< Updated upstream
-    // use the service layer
-    const result = await userService.add(title, ingredient);
-
-    console.log("controller result: ", result);
-=======
     // Use the service layer
     const result = await recipeService.add(title, method, ingredientList);
     console.log('recipeController->add() result:', result);
->>>>>>> Stashed changes
     res.redirect("/add");
     return;
   }
@@ -63,14 +56,8 @@ class RecipeController {
     }
 
     // use the service layer
-<<<<<<< Updated upstream
-    const result = await userService.edit(title, ingredient);
-
-    console.log("controller result: ", result);
-=======
     const result = await recipeService.edit(recipeId, title, ingredientList);
     console.log("recipeController->edit() result: ", result);
->>>>>>> Stashed changes
     res.redirect("/edit");
     return;
   }
