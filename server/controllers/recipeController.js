@@ -85,7 +85,7 @@ class RecipeController {
 
   async deleteRecipe(req, res, next) {
     // use the service layer
-    const result = await recipeService.deleteRecipe(req.params.recipeID);
+    const result = await recipeService.deleteRecipe(req.params.userId);
     res.status(result.status);
     // Return results from service
     return res.json({ data: result.data, message: result.message });
