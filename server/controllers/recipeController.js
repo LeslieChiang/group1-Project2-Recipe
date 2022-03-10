@@ -61,26 +61,34 @@ class RecipeController {
     });
   }
 
-  async delete(req, res, next) {
-    const { title, ingredient } = req.body;
+  // async delete(req, res, next) {
+  //   const { title, ingredient } = req.body;
 
-    // test inputs
-    if (
-      typeof req.body.title !== "string" ||
-      typeof req.body.ingredient !== "string"
-    ) {
-      res.status(400); // bad request
-      return res.json({
-        message: "Incorrect inputs",
-      });
-    }
+  //   // test inputs
+  //   if (
+  //     typeof req.body.title !== "string" ||
+  //     typeof req.body.ingredient !== "string"
+  //   ) {
+  //     res.status(400); // bad request
+  //     return res.json({
+  //       message: "Incorrect inputs",
+  //     });
+  //   }
 
+  //   // use the service layer
+  //   const result = await recipeService.delete(title, ingredient);
+
+  //   console.log("controller result: ", result);
+  //   res.redirect("/delete");
+  //   return;
+  // }
+
+  async deleteRecipe(req, res, next) {
     // use the service layer
-    const result = await recipeService.delete(title, ingredient);
-
-    console.log("controller result: ", result);
-    res.redirect("/delete");
-    return;
+    const result = await recipeService.deleteRecipe(req.params.recipeID);
+    res.status(result.status);
+    // Return results from service
+    return res.json({ data: result.data, message: result.message });
   }
 
   async showIngredient(req, res, next) {

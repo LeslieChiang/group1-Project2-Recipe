@@ -61,7 +61,9 @@ router
   .get((request, response) => {
     response.send("You have called the DELETE route!");
   })
-  .delete(recipeController.delete);
+  .delete(recipeController.deleteRecipe);
+
+// router.delete("delete/:recipeID", RecipeController.DeleteRecipe);
 
 // router.put("/protected/recipe", recipeController.update);
 // router.delete("/protected/driver/:driverId", recipeController.deleteDriver);
