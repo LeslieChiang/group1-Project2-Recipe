@@ -125,14 +125,6 @@ module.exports = {
       data: null,
     };
 
-    // const resultIngredient = await Ingredient.findAll();
-    // console.log("\n attribute", JSON.stringify(resultIngredient));
-
-    // result.message = "Data fetched successfully from DB";
-    // result.status = 200;
-    // result.data = resultIngredient; // this would be all the ingredient from the DB
-    // console.log("Service result - showIngredient: ", result);
-
     const resultUser = await User.findAll();
     console.log("\n attribute", JSON.stringify(resultUser));
     
