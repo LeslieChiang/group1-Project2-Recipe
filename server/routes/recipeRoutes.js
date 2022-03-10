@@ -38,7 +38,7 @@ router.route("/recipe/showUserRecipe").get((req, res) => {
   });
 });
 router
-  .route("/add")
+  .route("/recipe/add")
   .get((request, response) => {
     response.send("You have called the ADD route!");
     // if (request.isAuthenticated()) {
@@ -50,7 +50,7 @@ router
   .post(recipeController.add);
 
 router
-  .route("/edit")
+  .route("/recipe/edit/:recipeId")
   .get((request, response) => {
     response.send("You have called the EDIT route!");
   })
