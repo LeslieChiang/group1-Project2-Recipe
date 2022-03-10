@@ -9,6 +9,8 @@ const RecipeController = require("../controllers/recipeController");
 // Instantiate a new class instance
 const recipeController = new RecipeController();
 
+
+// // Available routes //
 router.route("/recipe/showIngredient").get((request, response) => {
   recipeController.showIngredient();
   response.send("You have called the showIngredient route!");
