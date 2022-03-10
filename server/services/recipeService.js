@@ -7,9 +7,9 @@ const {
   RecipeIngredientInter,
 } = require("../models");
 
-Recipe.sync({ alter: true }).then(() => console.log("Database is ready"));
-Ingredient.sync({ alter: true }).then(() => console.log("Database is ready"));
-RecipeIngredientInter.sync({ alter: true }).then(() => console.log("Database is ready"));
+Recipe.sync({ alter: true }).then(() => console.log("Recipe Database is ready"));
+Ingredient.sync({ alter: true }).then(() => console.log("Ingredient Database is ready"));
+RecipeIngredientInter.sync({ alter: true }).then(() => console.log("RecipeIngredient Database is ready"));
 
 module.exports = {
   add: async (userId, title, method, ingredientList) => {
