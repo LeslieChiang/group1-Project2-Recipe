@@ -80,8 +80,10 @@ class RecipeController {
     const result = await recipeService.showIngredient();
 
     console.log("controller result showIngredient: ", result);
-    // return res.json({ status: result.status, message: result.message });
-    return;
+
+    
+    res.send({ status: result.status, message: result.message });
+    // return;
   }
 
   async showRecipe(req, res, next) {
