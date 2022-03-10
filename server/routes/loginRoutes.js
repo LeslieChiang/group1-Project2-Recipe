@@ -4,7 +4,7 @@
 const express = require("express");
 const router = express.Router(); // create route
 
-require("passport");
+// require("passport");
 // const passportJwt = require("passport-jwt");
 // const ExtractJwt = passportJwt.ExtractJwt;
 // const StrategyJwt = passportJwt.Strategy;
@@ -41,11 +41,7 @@ router
   .route("/login")
   .get((request, response) => {
     response.send("You have called a login route!");
-    // if (request.isAuthenticated()) {
-    //   response.redirect("/");
-    // } else {
-    //   response.redirect("/login");
-    // }
+
   })
   .post(userController.login);
 // .post((request, response) => {
@@ -56,14 +52,7 @@ router
 //   });
 // });
 
-// userRouter.post('/login', passport.authenticate('local', {session: false}), (req, res) => {
-//   if(req.isAuthenticated()) {
-//       const {_id, username, role} = req.user;
-//       const token = signToken(_id);
-//       res.cookie('access_token', token, {httpOnly: true, sameSite: true});
-//       res.status(200).json({isAuthenticated: true, user: {username, role}})
-//   }
-// });
+
 
 router
   .route("/logout")
@@ -86,77 +75,77 @@ router
 // passport = require("./passport");
 // const User = require("../models");
 
-const passport = require("passport");
-const passportJwt = require("passport-jwt");
-const ExtractJwt = passportJwt.ExtractJwt;
-const StrategyJwt = passportJwt.Strategy;
+// const passport = require("passport");
+// const passportJwt = require("passport-jwt");
+// const ExtractJwt = passportJwt.ExtractJwt;
+// const StrategyJwt = passportJwt.Strategy;
 
-const fs = require("fs");
-const { User } = require("../models");
-// const key = fs.readFileSync(process.env.SECRET_KEY);
-const rs256Key = process.env.SECRET_KEY;
-const key = fs.readFileSync(rs256Key);
+// const fs = require("fs");
+// const { User } = require("../models");
+// // const key = fs.readFileSync(process.env.SECRET_KEY);
+// const rs256Key = process.env.SECRET_KEY;
+// const key = fs.readFileSync(rs256Key);
 
-passport.use(
-  new StrategyJwt(
-    {
-      jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
-      secretOrKey: key,
-    },
-    // (jwtPayload, callback) => {
-    //   return User.findOne({ where: { id: jwtPayload.id } })
-    //     .then((user) => {
-    //       console.log(user);
-    //       return callback(null, user);
-    //     })
-    //     .catch((err) => {
-    //       console.log(err);
-    //       return callback(err);
-    //     });
-    // }
-    (jwtPayload, done) => {
-      return done(null, jwtPayload);
-  }
-  )
-);
+// passport.use(
+//   new StrategyJwt(
+//     {
+//       jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
+//       secretOrKey: key,
+//     },
+//     // (jwtPayload, callback) => {
+//     //   return User.findOne({ where: { id: jwtPayload.id } })
+//     //     .then((user) => {
+//     //       console.log(user);
+//     //       return callback(null, user);
+//     //     })
+//     //     .catch((err) => {
+//     //       console.log(err);
+//     //       return callback(err);
+//     //     });
+//     // }
+//     (jwtPayload, done) => {
+//       return done(null, jwtPayload);
+//   }
+//   )
+// );
 
-const authenticateWithJwt = (req, res, next) => {
-  passport.authenticate(
-    "jwt",
-    { session: false },
-    async (error, jwt_payload) => {
-      // if (error) {
-      //   return next(error);
-      // }
+// const authenticateWithJwt = (req, res, next) => {
+//   passport.authenticate(
+//     "jwt",
+//     { session: false },
+//     async (error, jwt_payload) => {
+//       // if (error) {
+//       //   return next(error);
+//       // }
 
-      // User.findOne({ id: jwt_payload.id }, (err, user) => {
-      //   if (err || !user) {
-      //     return next(err || new Error("Could not find user"));
-      //   }
-      //   console.log("USER: ", user);
-      //   next(user);
-      // });
-      console.log("jwt_payload",jwt_payload);
-      if (error || !jwt_payload) {
-        res.status(401).json({ message: "Unauthorized" });
-      }
-      try {
-        const user = await User.findOne({
-          where: { id: jwt_payload.id },
-        });
-        req.user = user;
-        console.log("USER: ", user);
-      } catch (error) {
-        next(error);
-      }
-      next();
-    }
-  )(req, res, next);
-};
+//       // User.findOne({ id: jwt_payload.id }, (err, user) => {
+//       //   if (err || !user) {
+//       //     return next(err || new Error("Could not find user"));
+//       //   }
+//       //   console.log("USER: ", user);
+//       //   next(user);
+//       // });
+//       console.log("jwt_payload",jwt_payload);
+//       if (error || !jwt_payload) {
+//         res.status(401).json({ message: "Unauthorized" });
+//       }
+//       try {
+//         const user = await User.findOne({
+//           where: { id: jwt_payload.id },
+//         });
+//         req.user = user;
+//         console.log("USER: ", user);
+//       } catch (error) {
+//         next(error);
+//       }
+//       next();
+//     }
+//   )(req, res, next);
+// };
 
-router.get("/", authenticateWithJwt, (req, res) => {
-  res.status(200).json({ message: "it works!" });
-});
+// router.get("/", authenticateWithJwt, (req, res) => {
+//   res.status(200).json({ message: "it works!" });
+// });
 
 // router.route("/").get(
 //   // passport.authenticate("jwt", { session: false }),

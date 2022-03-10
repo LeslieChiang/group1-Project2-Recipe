@@ -20,9 +20,9 @@ class UserController {
     const result = await userService.register(email, password);
 
     console.log("register controller result: ", result);
-    res.redirect("/login");
-    // res.json({ status: result.status, message: result.message });
-    return;
+    // res.redirect("/login");
+    return res.send(result);
+    // return res.json({ status: result.status, message: result.message, data: result.data });
   }
 
   async login(req, res, next) {
@@ -47,8 +47,11 @@ class UserController {
     //   failureFlash: true,
     // });
 
-    res.json({ status: result.status, message: result.message });
-    return;
+    return res.json({
+      status: result.status,
+      message: result.message,
+      token: result.jwt,
+    });
   }
 
   async logout(req, res, next) {

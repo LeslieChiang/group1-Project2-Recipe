@@ -31,6 +31,7 @@ module.exports = {
     let result = {
       message: null,
       status: null,
+      data: null,
     };
 
     // look for user in the database
@@ -40,29 +41,25 @@ module.exports = {
     // console.log("user: ", user);
 
     if (!isUser) {
-      bcrypt.hash(password, saltRounds, async (err, hash) => {
-        // A callback function called after hash() complete.
-        if (err) {
-          console.error(err);
-        } else {
-          console.log("Hash: ", hash);
-          await User.create({
-            emailAddress: email,
-            passWord: hash,
-          });
-          result.status = 200;
-          result.message = "Registration successful";
-        }
+      const hash = bcrypt.hashSync(password, saltRounds);
+      const user = await User.create({
+        emailAddress: email,
+        passWord: hash,
       });
+
+      console.log("Hash: ", hash);
+
+      result.status = 200;
+      result.message = "Registration successful";
+      result.data = user.emailAddress;
     } else {
       result.status = 400;
       result.message = "User already exists! Please login with password";
     }
 
-    const resultUser = await User.findAll();
-    console.log("\n attribute", JSON.stringify(resultUser));
-    console.log("register_result", result);
-
+    // const resultUser = await User.findAll();
+    // console.log("\n attribute", JSON.stringify(resultUser));
+    console.log("register service result", result);
     return result;
   },
 
@@ -145,7 +142,7 @@ module.exports = {
     }
 
     console.log("login results from userService: ", result);
-    // Return results
+
     return result;
   },
 };
