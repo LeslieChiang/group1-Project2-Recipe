@@ -27,7 +27,6 @@ class RecipeController {
     // Use the service layer
     const result = await recipeService.add(userId, title, method, ingredientList);
     console.log('recipeController->add() result:', result);
-    // res.redirect("/add");
     return res.json({
       message: `${title} recipe successfully added.`
     });
@@ -55,10 +54,11 @@ class RecipeController {
     }
 
     // use the service layer
-    const result = await recipeService.edit(recipeId, title, ingredientList);
+    const result = await recipeService.edit(recipeId, userId, title, method, ingredientList);
     console.log("recipeController->edit() result: ", result);
-    // res.redirect("/edit");
-    return;
+    return res.json({
+      message: result.message
+    });
   }
 
   async delete(req, res, next) {

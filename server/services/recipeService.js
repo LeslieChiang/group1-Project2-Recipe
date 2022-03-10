@@ -54,9 +54,9 @@ module.exports = {
 
     // Look for recipe in the database
     const recipe = await Recipe.findByPk(recipeId);
-    console.log(`recipeService->edit(${recipeId})`, recipe);
+    console.log(`recipeService->edit(${recipeId})`);
     if (!recipe) {
-      result.message = `Recipe ID ${recipeId} is not found!`;
+      result.message = `recipeID ${recipeId} is not found!`;
       result.status = 404;
       return result;
     }
@@ -68,7 +68,7 @@ module.exports = {
       recipe.cookingSteps = method        
       await recipe.save(); // update the vehicle
 
-      result.message = `Updated recipe ID ${recipeId}!`;
+      result.message = `Updated recipeID ${recipeId}!`;
       result.data = recipe;
       result.status = 200;
       return result;
