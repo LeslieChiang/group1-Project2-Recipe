@@ -8,7 +8,8 @@ const {
 } = require("../models");
 
 Recipe.sync({ alter: true }).then(() => console.log("Database is ready"));
-
+Ingredient.sync({ alter: true }).then(() => console.log("Database is ready"));
+RecipeIngredientInter.sync({ alter: true }).then(() => console.log("Database is ready"));
 
 module.exports = {
   add: async (vehicleId) => {
