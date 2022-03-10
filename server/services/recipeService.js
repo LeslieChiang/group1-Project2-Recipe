@@ -58,13 +58,13 @@ module.exports = {
     // }
   },
 
-  delete: async (driverId) => {
-    // the result object is where we will put the result to be sent to the client
-    let result = {
-      message: null,
-      status: null,
-      data: null,
-    };
+  // delete: async (driverId) => {
+  //   // the result object is where we will put the result to be sent to the client
+  //   let result = {
+  //     message: null,
+  //     status: null,
+  //     data: null,
+  //   };
 
     // // check if driverId exist in database
     // const driverExist = await Driver.findOne({
@@ -99,7 +99,31 @@ module.exports = {
     //     return result;
     //   }
     // }
-  },
+  // },
+  // },
+
+  deleteRecipe: async (recipeId) => {
+    // the result object is where we will put the result to be sent to the client
+  let result = {
+    message: null,
+    status: null,
+    data: null,
+  };
+
+  const reciperemove = await Recipe.destroy(
+    {
+      where: 
+      {
+        id: recipeId
+      }
+    }
+  );
+
+  result.message = `Recipe ${recipeId} is deleted!`
+  result.status = 200;
+
+  return result;
+},
 
   showIngredient: async () => {
     // the result object is where we will put the result to be sent to the client
