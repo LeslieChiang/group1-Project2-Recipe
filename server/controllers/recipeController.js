@@ -77,7 +77,7 @@ class RecipeController {
 
     console.log("controller result showIngredient: ", result);
     // return res.json({ status: result.status, message: result.message });
-    return;
+    return result;
   }
 
   async showRecipe(req, res, next) {
