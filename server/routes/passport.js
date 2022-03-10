@@ -3,13 +3,16 @@ const passportJwt = require("passport-jwt");
 const ExtractJwt = passportJwt.ExtractJwt;
 const StrategyJwt = passportJwt.Strategy;
 
-const User = require("../models/user.model");
 
+
+const fs = require("fs");
+const User = require("../models");
+const key = fs.readFileSync(process.env.SECRET_KEY);
 passport.use(
   new StrategyJwt(
     {
       jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
-      secretOrKey: process.env.SECRET_KEY,
+      secretOrKey: key,
     },
     (jwtPayload, callback) => {
       return User.findOne({ where: { id: jwtPayload.id } })

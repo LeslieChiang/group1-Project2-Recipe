@@ -1,45 +1,37 @@
 // call controller for respective routes
-// const passport = require("./passport");
+const passport = require("./passport");
 
 // Create a new set of routes for protected
 const express = require("express");
 const router = express.Router(); // create route
 
-const passport = require("passport");
-const passportJwt = require("passport-jwt");
-const ExtractJwt = passportJwt.ExtractJwt;
-const StrategyJwt = passportJwt.Strategy;
+// const passport = require("passport");
+// const passportJwt = require("passport-jwt");
+// const ExtractJwt = passportJwt.ExtractJwt;
+// const StrategyJwt = passportJwt.Strategy;
 
-
-
-
-
-
-
-
-
-const fs = require("fs");
-const User = require("../models");
-const key = fs.readFileSync(process.env.SECRET_KEY);
-passport.use(
-  new StrategyJwt(
-    {
-      jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
-      secretOrKey: key,
-    },
-    (jwtPayload, callback) => {
-      return User.findOne({ where: { id: jwtPayload.id } })
-        .then((user) => {
-          console.log(user);
-          return callback(null, user);
-        })
-        .catch((err) => {
-          console.log(err);
-          return callback(err);
-        });
-    }
-  )
-);
+// const fs = require("fs");
+// const User = require("../models");
+// const key = fs.readFileSync(process.env.SECRET_KEY);
+// passport.use(
+//   new StrategyJwt(
+//     {
+//       jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
+//       secretOrKey: key,
+//     },
+//     (jwtPayload, callback) => {
+//       return User.findOne({ where: { id: jwtPayload.id } })
+//         .then((user) => {
+//           console.log(user);
+//           return callback(null, user);
+//         })
+//         .catch((err) => {
+//           console.log(err);
+//           return callback(err);
+//         });
+//     }
+//   )
+// );
 
 // Import User controller
 const UserController = require("../controllers/userController");
@@ -56,14 +48,14 @@ router
     //   response.redirect("/login");
     // }
   })
-  .post(userController.login);
-// .post((request, response) => {
-//   passport.authenticate("local", {
-//     successRedirect: "/",
-//     failureRedirect: "/register",
-//     failureFlash: true,
-//   });
-// });
+  .post(userController.login)
+  // .post((request, response) => {
+  //   passport.authenticate("local", {
+  //     successRedirect: "/",
+  //     failureRedirect: "/register",
+  //     failureFlash: true,
+  //   });
+  // });
 
 // userRouter.post('/login', passport.authenticate('local', {session: false}), (req, res) => {
 //   if(req.isAuthenticated()) {
@@ -76,10 +68,13 @@ router
 
 router
   .route("/logout")
-  .get(passport.authenticate('jwt', {session: false}), (request, response) => {
-    response.clearCookie("access_token");
-    response.send("You are logged out now!");
-  })
+  .get(
+    // passport.authenticate("jwt", { session: false }),
+    (request, response) => {
+      response.clearCookie("access_token");
+      response.send("You are logged out now!");
+    }
+  )
   .post(userController.logout);
 
 router
@@ -92,7 +87,7 @@ router
 router
   .route("/")
   .get(
-    passport.authenticate("jwt", { session: false }),
+    // passport.authenticate("jwt", { session: false }),
     (request, response) => {
       response.send("You have called the root route...test !");
       // if (request.isAuthenticated()) {
@@ -103,27 +98,24 @@ router
     }
   );
 
-  const authenticateWithJwt = (req, res, next) => {
-    passport.authenticate('jwt', {session: false}, (error, jwt_payload) => {
-        if (error) {
-            return next(error);
-        }
+const authenticateWithJwt = (req, res, next) => {
+  passport.authenticate("jwt", { session: false }, (error, jwt_payload) => {
+    if (error) {
+      return next(error);
+    }
 
-        User.findOne({id: jwt_payload.id}, (err, user) => {
-            if (err || !user) {
-                return next(err || new Error('Could not find user'));
-            }
+    User.findOne({ id: jwt_payload.id }, (err, user) => {
+      if (err || !user) {
+        return next(err || new Error("Could not find user"));
+      }
 
-            next(user);
-        });
-    })(req, res);
+      next(user);
+    });
+  })(req, res);
 };
 
 router.get("/", authenticateWithJwt, (req, res) => {
-    res.status(200).json({message: 'it works!'});
+  res.status(200).json({ message: "it works!" });
 });
-
-
-
 
 module.exports = router;
