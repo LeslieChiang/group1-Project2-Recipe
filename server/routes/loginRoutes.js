@@ -72,6 +72,8 @@ router
   })
   .post(userController.register);
 
+  // pwd "Renton" / "abcd"
+
 // passport = require("./passport");
 // const User = require("../models");
 
